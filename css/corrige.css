@@ -35,6 +35,9 @@ main {
         background: rgba(0, 0, 0, 4%);
         padding: 10px 20px;
         color: var(--dc);
+        ul {
+            margin-left: 20px;
+        }
     }
     .only-pdf {
         display: none;
