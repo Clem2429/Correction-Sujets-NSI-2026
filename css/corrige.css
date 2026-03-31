@@ -187,3 +187,24 @@ main {
         }
     }
 }
+
+@media print {
+    .out-pdf {
+        display: none;
+    }
+    pre,
+    code {
+        white-space: pre-wrap !important;   /* retour ligne */
+        word-break: break-word !important;  /* coupe longs mots */
+        overflow: visible !important;       /* enlève scroll */
+    }
+
+    pre {
+        page-break-inside: avoid; /* évite coupure moche */
+    }
+}
+
+@page {
+  size: A4;
+  margin: 10mm;
+}
