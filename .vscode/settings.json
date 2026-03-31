@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./sujet-2/init"
+    ]
+}

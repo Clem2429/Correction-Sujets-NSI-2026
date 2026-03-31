@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez les sujets corrigés de NSI pour l'année 2026. Préparez-vous efficacement avec nos ressources complètes et détaillées.">
+    <meta name="keywords" content="sujets corrigés NSI 2026, préparation NSI, ressources NSI, exercices NSI, cours NSI, révisions NSI">
+    <title>Corrigé Sujet N°2</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil">Accueil</a>
+        <button type="button" class="lien-top">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-up-icon lucide-circle-chevron-up"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°2</h1>
+        <h2>- Analyse Ecart de Salaires -</h2>
+        <div class="bloc-info-ressources">
+            Vous pouvez téléchargez les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources">
+            <a download="26_BCG_NSI_2.zip">Dossier (ZIP)</a>
+            <a download="init/sujet.pdf">Sujet (PDF)</a>
+            <a download="init/analyse.py">Fichier Python Initial</a>
+        </div>
+        <div class="ressources-annexes">
+            <a download="init/donnees.py">Données (Python)</a>
+            <a download="init/donnees_completes.py">Données Complètes (Python)</a>
+        </div>
+        <div class="ressources-corrigees">
+            <!-- <a download="corrige.pdf">Corrigé (PDF)</a> -->
+            <a download="corrige/analyse_corrige.py">Fichier Python Corrigé</a>
+        </div>
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire le code de la fonction salaire_moyen_condition qui prend en paramètres un tableau d’employés dans le format décrit ci-dessus, le nom d’un des trois champs 'experience', 'etudes' ou 'sexe' ainsi qu’une valeur et qui renvoie un nombre flottant (type <code>float</code>) correspondant au salaire moyen des employés dont la valeur associée au champ est la valeur fournie. <br>
+                La fonction doit renvoyer <code>None</code> s’il n’y a pas d’employés ayant la valeur recherchée pour le champ donné. Ainsi, un appel à <code>salaire_moyen_condition(employes, 'sexe', 'F')</code> permettra de renvoyer le salaire moyen des femmes employées.<br>
+                Une fonction de test sur le jeu de données de test est fournie. Déterminer le salaire moyen des femmes et des hommes pour le jeu de données complet.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def salaire_moyen_condition(employes, champ, valeur):
+    '''Renvoie le salaire moyen des employes ayant val comme valeur associée
+    au champ donné en argument.
+    Si le nombre d'employés considéré est nul, cette fonction renvoie None'''
+    s = 0
+    n = 0
+    for employe in employes:
+        if employe[champ] == valeur:
+            s += employe['salaire']
+            n += 1
+    if n == 0:
+        return None
+    return s/n
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                Executer la fonction <code>test_salaire_moyen_condition</code> afin de vérifier votre fonction.<br>
+                Afin de déterminer les salaires moyens des femmes et des hommes pour le jeu de données complet, on peut utiliser les appels suivants dans la console Python :
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# On récupère les données complètes: 
+e = donnees_completes.employes
+
+# Salaire moyen des femmes :
+salaire_moyen_condition(e, 'sexe', 'F')
+>> 2229.1961382113823
+# Salaire moyen des hommes :
+salaire_moyen_condition(e, 'sexe', 'M')
+>> 2438.0413385826773
+
+# Pour obtenir une moyenne des deux :
+a = salaire_moyen_condition(e, 'sexe', 'F')
+b = salaire_moyen_condition(e, 'sexe', 'M')
+(a+b)/2
+>> 2333.61873839703
+                </pre></code>
+            </div>
+            <div class="reponse text">
+                Le salaire moyen des femmes est d'environ <strong>2229.20</strong> euros, tandis que celui des hommes est d'environ <strong>2438.04</strong> euros. <br>
+                En calculant la moyenne des deux, on obtient un salaire moyen global d'environ <strong>2333.62</strong> euros.
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire en Python une fonction nommée effectif_par_sexe qui prend en paramètre un tableau non vide d’employés et qui renvoie un dictionnaire ayant deux clés 'F' et 'M' associées respectivement à l’effectif des femmes et à l’effectif des hommes employés.
+                <br><br>
+                Par exemple, avec le tableau employes précédent :<br>
+                <code>>>> effectif_par_sexe(employes)</code><br>
+                <code>>> {'F': 2, 'M': 3}</code>
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def effectif_par_sexe(employes):
+    '''Renvoie un dictionnaire ayant deux clés 'F' et 'M'
+    associée respectivement au nombre d'employées femmes et au
+    nombre d'employés hommes dans les données en arguments.'''
+    f = 0
+    m = 0
+    for employe in employes:
+        if employe['sexe'] == 'F':
+            f += 1
+        else: 
+            m += 1
+    return {'F': f, 'M': m}
+                </code></pre>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                écart = (salaire moyen des hommes - salaire moyen des femmes) / salaire moyen des hommes * 100<br><br>
+                Expliquer pourquoi le code de cette fonction est incorrect et proposer quelques tests simples sous forme d’assertions qui permettent de mettre ce ou ces problèmes en évidence :<br>
+                • vérifier que le résultat est None dans le cas où un seul sexe est présent ;<br>
+                • vérifier qu’un écart de salaires exprimé en pourcentage soit toujours compris entre 0 et 100.
+                <br><br>
+                Proposer une version corrigée de la fonction ecart_salaire qui valide ces tests et renvoie le bon écart. En déduire l’écart de salaire moyen dans les données complètes.
+            </div>
+            <div class="reponse text">
+                Le code de la fonction est incorrect car il calcul mal l'écart : il calcule simplement la différence des deux. De plus, il ne gère pas les cas où un seul sexe est présent, ce qui peut entraîner une division par zéro ou un résultat incorrect.
+                <br>
+                Par ailleurs, <code>salaire_moyen_condition('employes', 'sexe', 'M')</code> ne peut marcher étant donné que <code>employes</code> est entre guillemets.
+                <br><br>
+                Voici quelques tests simples sous forme d'assertions pour mettre en évidence ces problèmes :
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Test 1 : un seul sexe présent
+e = [{'sexe': 'F', 'salaire': 2000}, {'sexe': 'F', 'salaire': 2500}]
+assert calcul_ecart_sexe(e) == None, "Echec du Test 1"
+
+# Test 2 : écart de salaires exprimé en pourcentage compris entre 0 et 100
+e = [{'sexe': 'F', 'salaire': 2000}, {'sexe': 'M', 'salaire': 2500}]
+assert 0 <= calcul_ecart_sexe(e) <= 100, "Echec du Test 2"
+
+# Test 3 : écart de salaires exprimé en pourcentage correct
+e = [{'sexe': 'F', 'salaire': 2000}, {'sexe': 'M', 'salaire': 2500}]
+assert calcul_ecart_sexe(e) == 20, "Echec du Test 3"
+                </pre></code>
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Fonction corrigée :
+def calcul_ecart_sexe(employes):
+    '''Renvoie l'écart de salaire en pourcentage pour les femmes 
+    par rapport aux hommes'''
+    # Facultatif : on vérifie que les données ne sont pas vide :
+    assert len(employes) > 0, "Le tableau d'employés ne doit pas être vide"
+    moy_h = salaire_moyen_condition(employes, 'sexe', 'M')
+    moy_f = salaire_moyen_condition(employes, 'sexe', 'F')
+    if moy_h is None or moy_f is None:
+        return None
+    return (moy_h - moy_f) / moy_h * 100
+                </code></pre>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                Afin de proposer un salaire d’embauche à un nouvel employé, le service informatique de l’entreprise a proposé d’utiliser l’algorithme des k-plus proches voisins et renvoyer la moyenne des salaires des trois employés aux caractéristiques les plus proches. La fonction <code>salaire_par_proximite</code> effectue ce calcul pour faire une proposition.
+                <br><br>
+                Tester et comparer les salaires proposés aux deux futurs employés suivants :
+                <br><br>
+                <code>{'experience': 3, 'etudes': 3, 'sexe': 'F'}</code><br>
+                <code>{'experience': 3, 'etudes': 3, 'sexe': 'M'}</code>
+                <br><br>
+                Identifier la source des écarts entre les deux propositions de salaire dans le programme et la corriger.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# On exécute dans la console :
+e = donnees_completes.employes
+
+salaire_par_proximite(e, {'experience': 3, 'etudes': 3, 'sexe': 'F'})
+>> 2229.6666666666665
+salaire_par_proximite(e, {'experience': 3, 'etudes': 3, 'sexe': 'M'})
+>> 2406.0
+                </pre></code>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>OPTION 1 :</strong><br>
+                On remarque que la fonction <code>sexe_vers_entier</code> renvoie 1 pour les femmes et -1 pour les hommes. On distingue donc un écart de 4 entre les deux sexes.
+                <br>
+                Or, il n'y a aucune raison de différencier cela, ainsi, on peut simplement faire en sorte que la fonction <code>sexe_vers_entier</code> renvoie 1 pour les femmes et les hommes.
+                <br>
+                On peut donc modifier la fonction <code>sexe_vers_entier</code> de la manière suivante :
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Fonction corrigée :
+def sexe_vers_entier(e):
+    return 1
+                </pre></code>
+            </div>
+            <br>
+
+            <div class="reponse text">
+                <strong>OPTION 2 :</strong><br>
+                Etant donné que la fonction corrigée <code>sexe_vers_entier</code> doit renvoyer 1, elle devient inutile. On peut donc simplement supprimer la fonction <code>sexe_vers_entier</code> et supprimer son appel par 1 dans la fonction <code>distance</code>.
+                <br>
+                On a donc la fonction modifiée <code>distance</code> suivante :
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Fonction corrigée :
+def distance(e1, e2):
+    '''Renvoie la mesure de distance entre deux personnes.'''
+    s = 0
+    s = s + (e1['experience'] - e2['experience'])**2
+    s = s + (e1['etudes'] - e2['etudes'])**2
+    return sqrt(s)
+                </pre></code>
+            </div>
+            <br>
+            <div class="reponse text">
+                En conclusion, on obtient la même proposition de salaire, à savoir : <code>2229.6666666666665</code>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>

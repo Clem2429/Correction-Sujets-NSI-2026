@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez les sujets corrigés de NSI pour l'année 2026. Préparez-vous efficacement avec nos ressources complètes et détaillées.">
+    <meta name="keywords" content="sujets corrigés NSI 2026, préparation NSI, ressources NSI, exercices NSI, cours NSI, révisions NSI">
+    <title>Corrigé Sujet N°1</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil">Accueil</a>
+        <button type="button" class="lien-top">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-up-icon lucide-circle-chevron-up"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°1</h1>
+        <h2>- Codage RLE d'images -</h2>
+        <div class="module">
+            La bibliothèque <code class="fonction">PIL</code> (Pillow) est utilisée. 
+            <h4>Installation via CMD :</h4>
+            <code>pip install Pillow</code>
+        </div>
+        <div class="bloc-info-ressources">
+            Vous pouvez téléchargez les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources">
+            <a download="26_BCG_NSI_1.zip">Dossier (ZIP)</a>
+            <a download="init/sujet.pdf">Sujet (PDF)</a>
+            <a download="init/rle.py">Fichier Python Initial</a>
+        </div>
+        <div class="ressources-corrigees">
+            <!-- <a download="corrige.pdf">Corrigé (PDF)</a> -->
+            <a download="corrige/rle_corrige.py">Fichier Python Corrigé</a>
+        </div>
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Déterminer si la liste obtenue par codage RLE est forcément de longueur inférieure ou égale à la liste de départ.
+            </div>
+            <div class="reponse text">
+                Non, la liste obtenue par codage RLE n'est pas forcément de longueur inférieure ou égale à la liste de départ. En effet, le codage RLE est efficace pour compresser des séquences de données qui contiennent de nombreuses répétitions, mais dans le cas où les données sont très variées et ne contiennent pas beaucoup de répétitions, le codage RLE peut en réalité augmenter la taille de la liste. Par exemple, si la liste de départ contient des éléments uniques sans répétition, le codage RLE ajoutera des paires (élément, 1) pour chaque élément, ce qui peut rendre la liste codée plus longue que la liste originale. En revanche, si la liste de départ contient de longues séquences de répétitions, le codage RLE peut réduire considérablement la taille de la liste. Par conséquent, l'efficacité du codage RLE dépend fortement de la nature des données à compresser.
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                En étudiant bien la fonction codage_rle qui réalise le codage, écrire le corps de la fonction <code class="fonction">decodage_rle</code> qui réalise le décodage d’une liste. Des tests sont fournis dans la fonction <code class="fonction">test_codage</code>, on pourra les compléter.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def decodage_rle(liste_rle):
+    '''Renvoie la liste d'octets obtenue à partir de la liste liste_rle obtenue par compression RLE'''
+    resultat = []
+    for k in range(0, len(liste_rle), 2):
+        for i in range(liste_rle[k]):
+            resultat.append(liste_rle[k+1])
+    return resultat
+
+def test_codage():
+    assert codage_rle([255, 255, 0, 255, 255, 255]) == [2, 255, 1, 0, 3, 255], "Echec -  test 1"
+    assert decodage_rle([2, 255, 1, 0, 3, 255]) == [255, 255, 0, 255, 255, 255], "Echec - test 2"
+    # tests ajoutés :
+    assert codage_rle([255, 0, 255, 0, 255, 0]) == [1, 255, 1, 0, 1, 255, 1, 0, 1, 255, 1, 0], "Echec - test 3"
+    assert decodage_rle([1, 255, 1, 0, 1, 255, 1, 0, 1, 255, 1, 0]) == [255, 0, 255, 0, 255, 0], "Echec - test 4"
+    assert codage_rle([255, 255, 255, 255, 255, 255, 255, 255]) == [8, 255], "Echec - test 5"
+    assert decodage_rle([8, 255]) == [255, 255, 255, 255, 255, 255, 255, 255], "Echec - test 6"
+                </code></pre>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                Pour tester le codage sur une image, on peut utiliser la fonction fournie <code class="fonction">encoder_decoder_image</code> qui efectue le codage puis le décodage d’une image pour l’enregistrer à nouveau dans un fichier. Utiliser cette fonction sur les images <strong>bac_nsi_32.png</strong> et <strong>bac_nsi_256.png</strong> et observer la diférence de comportement.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Dans votre console, entrez ceci : -puis observez les images ci-dessous affichées-
+encoder_decoder_image("bac_nsi_32.png")
+encoder_decoder_image("bac_nsi_256.png")
+                </code></pre>
+            </div>
+            <div class="reponse-images">
+                <img src="assets/bac_nsi_32.png.dec.png" alt="Image décodée de bac_nsi_32.png">
+                <img src="assets/bac_nsi_256.png.dec.png" alt="Image décodée de bac_nsi_256.png">
+            </div>
+            <div class="reponse text">
+                L'image <strong>bac_nsi_32.png</strong> est une image de petite taille (32x32 pixels). Comme on code sur 255 pixels, aucun problème.
+                En revanche, l'image <strong>bac_nsi_256.png</strong> est une image de plus grande taille (256x256 pixels) et coder 256 pixels sur 255 est impossible. Le codage RLE ne peut pas gérer correctement cette image, ce qui entraîne une perte d'information et une image décodée incorrecte.
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                Le problème précédent est lié au fait que sur des grandes images, il est possible d’avoir plus de 255 pixels de la même couleur. Proposer une démarche de résolution de ce problème qui modifie les fonctions d’encodage et de décodage, puis l’implémenter.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Version corrigée :
+def codage_rle(liste_octets):
+    '''Renvoie une liste d'octets obtenue par compression RLE'''
+    liste_rle = []
+    i = 0
+    while i < len(liste_octets):
+        c = liste_octets[i]
+        k = 1
+        while i+k < len(liste_octets) and liste_octets[i+k] == c:
+            k += 1
+        # correction :
+        q = k//255
+        r = k%255
+        for _ in range(q):
+            liste_rle.append(255)
+            liste_rle.append(c)
+        if r != 0:
+            liste_rle.append(r)
+            liste_rle.append(c)
+        i += k
+    return liste_rle
+                </code></pre>
+            </div>
+            <div class="reponse text">
+                On a donc modifié <code class="fonction">codage_rle</code> afin de gérer les cas où il y a plus de 255 pixels de la même couleur. La fonction divise le nombre de pixels consécutifs (k) par 255 pour obtenir le nombre de blocs complets (q) et le reste (r). Ensuite, elle ajoute q blocs de 255 pixels suivis de la couleur, et si r n'est pas nul, elle ajoute un bloc supplémentaire pour les pixels restants. Cette approche permet de coder correctement les images même lorsque le nombre de pixels consécutifs dépasse 255.
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>

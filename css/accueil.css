@@ -1,0 +1,41 @@
+main {
+    h1 {
+        color: var(--mc);
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .bloc-info {
+        width: 80%;
+        margin: 20px auto 10px auto;
+        text-align: center;
+        color: var(--dc);
+        background: rgba(0, 0, 0, 4%);
+        padding: 5px 20px;
+    }
+    .sujets {
+        width: 80%;
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 20px;
+        .sujet {
+            all: unset;
+            padding: 10px 20px;
+            background: var(--mc);
+            color: var(--lc);
+            outline: 1px solid var(--mc);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+            width: 60%;
+            text-align: center;
+            &:hover {
+                color: var(--mc);
+                background: var(--lc);
+            }
+        }
+    }
+}

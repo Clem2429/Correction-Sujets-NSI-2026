@@ -1,0 +1,67 @@
+*, &::before, &::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --mc: rgb(50, 200, 255);
+    --lc: #fff;
+    --dc: #333;
+    --vc: rgb(0, 175, 0);
+    --ec: rgb(255, 0, 0);
+    --cc: rgb(0, 0, 200);
+    --rc: brown;
+}
+
+main {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    .lien-accueil {
+        all: unset;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: inline-block;
+        width: 100%;
+        background: var(--mc);
+        text-align: center;
+        padding: 10px 0;
+        color: var(--lc);
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+        &:hover {
+            padding: 20px 0px;
+        }
+    }
+    .lien-top {        
+        all: unset;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50px;
+        background: var(--mc);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        cursor: pointer;
+        transition: 0.3s ease;
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none; /* pas cliquable quand invisible */
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        &:hover {
+            background: rgb(50, 200, 255, 0.8);
+        }
+        &.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+    }
+}
