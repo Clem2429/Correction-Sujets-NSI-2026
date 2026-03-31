@@ -31,10 +31,24 @@ main {
             cursor: pointer;
             transition: 0.2s ease-in-out;
             width: 60%;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .subject {
+                font-weight: bold;
+            }
             &:hover {
                 color: var(--mc);
                 background: var(--lc);
+            }
+            &.no-data {
+                background:rgba(0, 0, 0, 4%);
+                color: var(--dc);
+                outline: 1px solid rgba(0, 0, 0, 4%);
+                pointer-events: none;
+                .name {
+                    color:var(--ec);
+                }
             }
         }
     }
