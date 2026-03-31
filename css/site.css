@@ -65,3 +65,9 @@ main {
         }
     }
 }
+
+@media print {
+    .out-pdf {
+        display: none;
+    }
+}
