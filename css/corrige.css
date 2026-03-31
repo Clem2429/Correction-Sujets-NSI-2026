@@ -20,6 +20,25 @@ main {
         text-align: left;
         border-left: 5px solid var(--ec);
     }
+    .link-pdf {
+        width: 90%;
+        margin: 0 auto;
+        text-align: center;
+        span {
+            color: var(--dc);
+        }
+        a {
+            color: var(--qc);
+        }
+    }
+    .info-sujet {
+        background: rgba(0, 0, 0, 4%);
+        padding: 10px 20px;
+        color: var(--dc);
+    }
+    .only-pdf {
+        display: none;
+    }
     .bloc-info-ressources {
         width: 90%;
         margin: 20px auto 10px auto;
@@ -192,6 +211,10 @@ main {
     .out-pdf {
         display: none!important;
     }
+    .only-pdf {
+        display: block!important;
+    }
+
     pre,
     code {
         white-space: pre-wrap !important;   /* retour ligne */
@@ -202,7 +225,6 @@ main {
 
     .question {
         page-break-inside: avoid;
-
     }
     pre {
         page-break-inside: avoid;
