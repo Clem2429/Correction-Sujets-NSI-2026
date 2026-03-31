@@ -190,17 +190,22 @@ main {
 
 @media print {
     .out-pdf {
-        display: none;
+        display: none!important;
     }
     pre,
     code {
         white-space: pre-wrap !important;   /* retour ligne */
         word-break: break-word !important;  /* coupe longs mots */
         overflow: visible !important;       /* enlève scroll */
+        background: rgba(0, 0, 0, 2%);
     }
 
+    .question {
+        page-break-inside: avoid;
+
+    }
     pre {
-        page-break-inside: avoid; /* évite coupure moche */
+        page-break-inside: avoid;
     }
 }
 
