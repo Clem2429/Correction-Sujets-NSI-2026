@@ -208,6 +208,13 @@ main {
             }
         }
     }
+    .legal {
+        text-align: center;
+        font-size: 14px;
+        margin: 20px 0;
+        color: rgb(150, 150, 150);
+        width: 100%;
+    }
 }
 
 @media print {
