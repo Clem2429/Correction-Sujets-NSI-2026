@@ -55,7 +55,7 @@
             Vous pouvez téléchargez les éléments suivants en cliquant sur les boutons associés :
         </div>
         <div class="ressources out-pdf">
-            <a download="26_BCG_NSI_1.zip">Dossier (ZIP)</a>
+            <a download="init/26_BCG_NSI_1.zip">Dossier (ZIP)</a>
             <a download="init/sujet.pdf">Sujet (PDF)</a>
             <a download="init/rle.py">Fichier Python Initial</a>
         </div>
@@ -153,7 +153,8 @@ def codage_rle(liste_octets):
                 On a donc modifié <code class="fonction">codage_rle</code> afin de gérer les cas où il y a plus de 255 pixels de la même couleur. La fonction divise le nombre de pixels consécutifs (k) par 255 pour obtenir le nombre de blocs complets (q) et le reste (r). Ensuite, elle ajoute q blocs de 255 pixels suivis de la couleur, et si r n'est pas nul, elle ajoute un bloc supplémentaire pour les pixels restants. Cette approche permet de coder correctement les images même lorsque le nombre de pixels consécutifs dépasse 255.
             </div>
         </div>
-        <div class="legal only-pdf">© 2026 - Clément Legoubé</div>
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>

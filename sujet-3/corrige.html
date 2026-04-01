@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez les sujets corrigés de NSI pour l'année 2026. Préparez-vous efficacement avec nos ressources complètes et détaillées.">
+    <meta name="keywords" content="sujets corrigés NSI 2026, préparation NSI, ressources NSI, exercices NSI, cours NSI, révisions NSI">
+    <title>Corrigé Sujet N°3</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-up-icon lucide-circle-chevron-up"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°3</h1>
+        <h2>- Cycle Menstruel -</h2>
+        <div class="link-pdf only-pdf">
+            <span>Le Dossier ZIP de l'épreuve pratique N°3 se situe à l'adresse suivante :</span>
+            <br>
+            <a href="https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f0247dc1be7ea38d75a4" target="_blank">https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f0247dc1be7ea38d75a4</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="link-pdf only-pdf">
+            <span>Ce corrigé est tiré du site suivant :</span>
+            <br>
+            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="link-pdf only-pdf">
+            <span>La version du fichier Python corrigé est accessible à l'adresse suivante :</span>
+            <br>
+            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/cycle_menstruel_corrige.py" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/cycle_menstruel_corrige.py</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="info-sujet only-pdf">
+            <ul>
+                <li>Ce sujet est le N°3 de la banque des sujets pratiques de NSI 2026;</li>
+                <li>Ce sujet (corrigé) comporte 4 questions ;</li>
+                <li>Chaque réponse à une question se trouve sur une page distincte.</li>
+            </ul>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez téléchargez les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download="init/26_BCG_NSI_3.zip">Dossier (ZIP)</a>
+            <a download="init/sujet.pdf">Sujet (PDF)</a>
+            <a download="init/cycle_menstruel.py">Fichier Python Initial</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download="corrige/corrige.pdf">Corrigé (PDF)</a>
+            <a download="corrige/cycle_menstruel_corrige.py">Fichier Python Corrigé</a>
+        </div>
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire en Python une fonction nommée <code>est_bissextile</code> qui prend en paramètre un entier correspondant à une année et qui renvoie un booléen indiquant si elle est bissextile en appliquant la règle donnée ci-dessus.
+            </div>
+            <div class="reponse text">
+                Pour rappel, et en simplifiant l'énoncé :<br>
+                • Une année divisible par 400 est bissextile ;<br>
+                • Une année divisible par 4 mais pas par 100 est bissextile,<br>
+                • Les autres ne le sont pas.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def est_bissextile(annee):
+    '''Renvoie un booléen indiquant si l'année en argument est bissextile.'''
+    if annee%400 == 0:
+        return True
+    elif annee%4 == 0 and annee%100 != 0:
+        return True
+    else:
+        return False
+
+# Version plus courte :
+def est_bissextile(annee):
+    '''Renvoie un booléen indiquant si l'année en argument est bissextile.'''
+    return annee%400 == 0 or (annee%4 == 0 and annee%100 != 0)
+                </code></pre>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire en Python une fonction nommée <code>determiner_phase</code> qui prend en paramètre un entier(compris entre 1 et 28 inclus) qui correspond au jour d’un cycle et qui renvoie un entier correspondant au numéro de la phase associée. À l’aide d’une assertion, on garantira que l’entier donné en argument est compris entre 1 et 28 inclus.
+            </div>
+            <div class="reponse text">
+                Pour rappel : <br>
+                • J 1 à 5 : phase 1 ;<br>
+                • J 6 à 13 : phase 2 ;<br>
+                • J 14 : phase 3 ;<br>
+                • J 15 à 28 : phase 4.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def determiner_phase(i):
+    '''Renvoie le numéro de la phase associée au jour i d'un cycle.'''
+    assert 1 <= i <= 28, "Le jour doit être compris entre 1 et 28 inclus."
+    if 1 <= i <= 5:
+        return 1
+    elif 6 <= i <= 13:
+        return 2
+    elif i == 14:
+        return 3
+    else:
+        return 4
+                </code></pre>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                La fonction <code>ajouter_jours</code>, dont le code est déjà fourni, prend en paramètres une date et un entier représentant un nombre de jours. Elle renvoie la nouvelle date obtenue après ajout de ces jours.<br>
+                Compléter la fonction test_ajouter_jours en ajoutant au moins trois autres tests pertinents. Pour chaque test ajouté, une brève justification doit être donnée afin d’expliquer pourquoi ce cas est important à vérifier.<br>
+                Dans le but d'ajouter l’ensemble des dates de début de règles sur un agenda en ligne pour une année donnée, on souhaite créer un fichier au format iCalendar. La structure d’un tel fichier pour un calendrier est la suivante :
+                <br><br>
+                <code>BEGIN:VCALENDAR</code><br>
+                <code>VERSION:2.0</code><br>
+                <code>PRODID: *le nom du calendrier*</code><br>
+                <code>*une suite d'événements*</code><br>
+                <code>END :VCALENDAR</code><br><br>
+                Chaque événement d’une journée est lui-même décrit par une entrée de la forme suivante :<br><br>
+                <code>BEGIN :VEVENT</code><br>
+                <code>DTSTART: la date JJ/MM/AAAA écrite sous la forme AAAAMMJJ</code><br>
+                <code>SUMMARY : la description de l'événement</code><br>
+                <code>END :VEVENT</code><br><br>
+            </div>
+            <div class="reponse text">
+                Ci-dessous, vous retrouverez 12 tests différents (dont le 1er est tiré du sujet donné). Ces tests devraient tester la plupart des situations pouvant exister cependant, seuls trois sont demandés ! 
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def test_ajouter_jours():
+    # 1 - (Déjà présent) Ajout de jours dans le même mois :              
+    assert ajouter_jours((7, 9, 2025), 3) == (10, 9, 2025), "Echec Test 1"
+
+    #2 - Ajout de jours qui font changer de mois (30 jours):
+    assert ajouter_jours((25, 4, 2025), 10) == (5, 5, 2025), "Echec Test 2"
+
+    #3 - Ajout de jours qui font changer de mois (31 jours):
+    assert ajouter_jours((25, 7, 2025), 10) == (4, 8, 2025), "Echec Test 3"
+
+    #4 - Ajout de jours qui font changer d'année (365 jours):
+    assert ajouter_jours((25, 12, 2025), 10) == (4, 1, 2026), "Echec Test 4"
+
+    #5 - Ajout de jours qui font changer d'année (366 jours) :
+    assert ajouter_jours((25, 12, 2024), 10) == (4, 1, 2025), "Echec Test 5"
+
+    #6 - Ajout de jours qui font changer de mois et d'année (40 jours) :
+    assert ajouter_jours((25, 12, 2024), 40) == (3, 2, 2025), "Echec Test 6"
+
+    #7 - Ajout de jours qui font changer de mois et d'année (vers février en année bissextile) :
+    assert ajouter_jours((25, 12, 2024), 66) == (1, 3, 2025), "Echec Test 7"
+
+    #8 - Ajout d'une année complète (année bissextile) :
+    assert ajouter_jours((1, 1, 2024), 366) == (1, 1, 2025), "Echec Test 8"
+
+    #9 - Ajout d'une année complète (année non bissextile) :
+    assert ajouter_jours((1, 1, 2025), 365) == (1, 1, 2026), "Echec Test 9"
+
+    #10 - Ajout de jours en février dans une année bissextile :
+    assert ajouter_jours((25, 2, 2024), 5) == (1, 3, 2024), "Echec Test 10"
+
+    #11 - Ajout de jours en février dans une année non bissextile :
+    assert ajouter_jours((25, 2, 2025), 5) ==  (2, 3, 2025), "Echec Test 11"
+
+    #12 - Ajout de 0 jour :
+    assert ajouter_jours((25, 2, 2024), 0) == (25, 2, 2024), "Echec Test 12"
+                </pre></code>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+            On complète les nombres strictement inférieurs à 10 par un 0 pour s’assurer que la valeur de DTSTART soit toujours de longueur 8. Ainsi, la date du 3 juillet 2026 s’écrit sous la forme <code>DTSTART : 20260703</code>.
+            <br><br>
+            La fonction <code>calendrier_``cycles``</code>, présente dans le fichier fourni, prend en paramètre une date correspondant au premier jour des dernières règles et renvoie la liste chronologique des dates de début de règles qui se présentent dans les 100 jours suivant cette date, date incluse, au format iCalendar sous la forme d’une chaîne de caractères.<br>
+            Observer avec la fonction test_calendrier_cycles que le calendrier renvoyé par la fonction calendrier_cycles n’est pas dans un format valide.<br>
+            Identifier le problème dans la fonction calendrier_cycles, proposer une démarche de résolution et la mettre en œuvre.
+            </div>
+            <div class="reponse text">
+                On remarque que le problème, quand on exécute <code>test_calendrier_cycles()</code>, se trouve au niveau de l'enregistrement de la date :<br>
+                <code>date = str(annee)+str(mois)+str(jour)</code><br>
+                En effet, si le jour ou le mois est inférieur à 10, alors la date ne sera pas au format AAAAMMJJ. Par exemple, pour le 3 juillet 2026, on obtiendra <code>202673</code> au lieu de <code>20260703</code>.
+            </div>
+            <br>
+            <div class="reponse text"><strong>OPTION 1</strong></div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Fonction corrigée :
+def calendrier_cycles(date_regles):
+    """Renvoie une chaîne de caractère contenant au format iCalendar, l'ensemble
+    des dates de début de règles qui se présentent dans les 100 jours suivants 
+    `date_regles`, date incluse.
+
+    Hypothèse : cycle régulier de 28 jours. """
+
+    cal_lignes = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:']
+
+    date_courante = date_regles
+    jours_ecoules = 0
+
+    # On ajoute les dates tant que l'on ne dépasse pas 100 jours écoulés
+    while jours_ecoules <= 100:
+        jour, mois, annee = date_courante  
+        cal_lignes.append('BEGIN:VEVENT')
+        cal_lignes.append('SUMMARY: Règles')
+        # CORRECTION :
+        date = str(annee)+str(mois).zfill(2)+str(jour).zfill(2)
+        cal_lignes.append('DTSTART:'+date)
+        cal_lignes.append('END:VEVENT')
+        date_courante = ajouter_jours(date_courante, 28)
+        jours_ecoules += 28 
+
+    cal_lignes.append('END:VCALENDAR')
+
+    # La méthode join va renvoyer ici une unique chaîne contenant toutes les
+    # chaînes de la liste séparées par des sauts de lignes.
+    return '\n'.join(cal_lignes)
+                </pre></code>
+            </div>
+            <br><br>
+            <div class="reponse text"><strong>OPTION 2</strong></div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Fonction corrigée :
+def calendrier_cycles(date_regles):
+    """Renvoie une chaîne de caractère contenant au format iCalendar, l'ensemble
+    des dates de début de règles qui se présentent dans les 100 jours suivants 
+    `date_regles`, date incluse.
+
+    Hypothèse : cycle régulier de 28 jours. """
+
+    cal_lignes = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:']
+
+    date_courante = date_regles
+    jours_ecoules = 0
+
+    # On ajoute les dates tant que l'on ne dépasse pas 100 jours écoulés
+    while jours_ecoules <= 100:
+        jour, mois, annee = date_courante  
+        cal_lignes.append('BEGIN:VEVENT')
+        cal_lignes.append('SUMMARY: Règles')
+        # CORRECTION :
+        date = ""
+        str_mois = ""
+        str_jour = ""
+        if 0 < len(str(annee)) < 4:
+            return "Année invalide, elle doit contenir 4 chiffres."
+        if len(str(mois)) < 2:
+            str_mois = "0"+str(mois)
+        else:
+            str_mois = str(mois)
+        if len(str(jour)) < 2:
+            str_jour = "0"+str(jour)
+        else:
+            str_jour = str(jour)
+        date = str(annee) + str_mois + str_jour
+        # FIN DE CORRECTION
+        cal_lignes.append('DTSTART:'+date)
+        cal_lignes.append('END:VEVENT')
+        date_courante = ajouter_jours(date_courante, 28)
+        jours_ecoules += 28 
+
+    cal_lignes.append('END:VCALENDAR')
+
+    # La méthode join va renvoyer ici une unique chaîne contenant toutes les
+    # chaînes de la liste séparées par des sauts de lignes.
+    return '\n'.join(cal_lignes)
+                </pre></code>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>ATTENTION : </strong><br>
+                Par ailleurs, on remarquera que la fonction est en fait encore plus faussée : elle n'affiche pas jusqu'à 100 jours mais avant du fait du :<br>
+                <code>while jours_ecoules + 28 <= 100:</code>
+                <br>Que l'on corrige en :<br>
+                <code>while jours_ecoules <= 100:</code>
+                <br><br>
+                On mettait en fait fin à la période trop tôt, à savoir après 84 jours au lieu de 112 jours. En corrigeant ce problème, on obtient 4 dates de début de règles au lieu de 3.
+            </div>
+        </div>
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>
