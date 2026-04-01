@@ -113,7 +113,7 @@ def calendrier_cycles(date_regles):
     jours_ecoules = 0
 
     # On ajoute les dates tant que l'on ne dépasse pas 100 jours écoulés
-    while jours_ecoules + 28<= 100:
+    while jours_ecoules <= 100:
         jour, mois, annee = date_courante  
         cal_lignes.append('BEGIN:VEVENT')
         cal_lignes.append('SUMMARY: Règles')
