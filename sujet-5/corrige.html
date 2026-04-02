@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Découvrez les sujets corrigés de NSI pour l'année 2026. Préparez-vous efficacement avec nos ressources complètes et détaillées.">
     <meta name="keywords" content="sujets corrigés NSI 2026, préparation NSI, ressources NSI, exercices NSI, cours NSI, révisions NSI">
-    <title>Corrigé Sujet N°4</title>
+    <title>Corrigé Sujet N°5</title>
     <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
     <link href="../css/site.css" rel="stylesheet"/>
     <link href="../css/corrige.css" rel="stylesheet"/>
@@ -18,12 +18,12 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-up-icon lucide-circle-chevron-up"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
         </button>
         <br><br>
-        <h1>Corrigé Sujet N°4</h1>
-        <h2>- Croissance des Plantes -</h2>
+        <h1>Corrigé Sujet N°5</h1>
+        <h2>- Empreinte Carbone -</h2>
         <div class="link-pdf only-pdf">
-            <span>Le Dossier ZIP de l'épreuve pratique N°4 se situe à l'adresse suivante :</span>
+            <span>Le Dossier ZIP de l'épreuve pratique N°5 se situe à l'adresse suivante :</span>
             <br>
-            <a href="https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f03f3f7bb27ef4e9d9ad" target="_blank">https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f03f3f7bb27ef4e9d9ad</a>
+            <a href="https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f059cb85140736350711" target="_blank">https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f059cb85140736350711</a>
         </div>
         <br class="only-pdf"><br class="only-pdf">
         <div class="link-pdf only-pdf">
@@ -35,12 +35,12 @@
         <div class="link-pdf only-pdf">
             <span>La version du fichier Python corrigé est accessible à l'adresse suivante :</span>
             <br>
-            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/culture_corrige.py" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/culture_corrige.py</a>
+            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/empreinte_corrige.py" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/empreinte_corrige.py</a>
         </div>
         <br class="only-pdf"><br class="only-pdf">
         <div class="info-sujet only-pdf">
             <ul>
-                <li>Ce sujet est le N°2 de la banque des sujets pratiques de NSI 2026;</li>
+                <li>Ce sujet est le N°5 de la banque des sujets pratiques de NSI 2026;</li>
                 <li>Ce sujet (corrigé) comporte 4 questions ;</li>
                 <li>Chaque réponse à une question se trouve sur une page distincte.</li>
             </ul>
@@ -50,124 +50,95 @@
             Vous pouvez téléchargez les éléments suivants en cliquant sur les boutons associés :
         </div>
         <div class="ressources out-pdf">
-            <a download="init/26_BCG_NSI_4.zip">Dossier (ZIP)</a>
+            <a download="init/26_BCG_NSI_5.zip">Dossier (ZIP)</a>
             <a download="init/sujet.pdf">Sujet (PDF)</a>
             <a download="init/analyse.py">Fichier Python Initial</a>
         </div>
         <div class="ressources-annexes out-pdf">
-            <a download="init/plantes.py">Plantes (Python)</a>
-            <a download="init/mesures.py">Mesures (Python)</a>
+            <a download="init/empreinte_ada_agr.json">Empreintes Ada Agr (JSON)</a>
+            <a download="init/empreintes_ada.json">Empreintes Ada (JSON)</a>
         </div>
         <div class="ressources-corrigees out-pdf">
-            <a download="corrige/corrige.pdf">Corrigé (PDF)</a>
-            <a download="corrige/culture_corrige.py">Fichier Python Corrigé</a>
+            <a download="corrige/corrige.pdf">Corrigé V1 (PDF)</a>
+            <a download="corrige/empreinte_corrige.py">Fichier Python Corrigé V1</a>
+            <a download="corrige/empreinte_corrige_warren.py">Fichier Python Corrigé V2</a>
         </div>
         <div class="question">
             <h3>Question 1</h3>
             <div class="consigne">
-                Écrire une fonction <code>croissance_moyenne(plantes)</code> qui prend en paramètre une liste d’instances de la classe <code>Plante</code> et renvoie la moyenne des durées de croissance de l’ensemble de ces plantes (en jours). Si la liste fournie est vide, la fonction doit renvoyer <code>None</code>.<br>
-                Écrire au moins deux tests pour valider le bon fonctionnement de cette fonction, dont une traitant le cas d’une liste vide.
+                Compléter le corps de la fonction <code>total_simple</code>. Ajouter un test permettant d’afficher l’empreinte carbone totale d’Ada, en utilisant les fonctions fournies pour accéder au fichier <code>empreinte_ada_aggr.json</code>.
             </div>
             <div class="reponse code">
                 <pre><code class="language-python">
-def croissance_moyenne(plantes):
-    if plantes == []:
-        return None
+def total_simple(empreinte):
+    """Fonction qui renvoie l'empreinte carbone totale d'un dictionnaire associant
+    une empreinte carbone à des noms de catégories"""
     s = 0
-    n = 0
-    for plante in plantes:
-        s += plante.croissance
-        n += 1
-    return s/n
+    for key in empreinte:
+        s += empreinte[key]
+    return s
                 </code></pre>
             </div>
             <br>
-            <div class="reponse text">Pour les tests possibles :</div>
+            <div class="reponse text">
+                Afin d'afficher l'empreinte carbone totale d'Ada, on peut utiliser le code suivant :
+                <br> (Et tester sa valeur, au cas où...)
+            </div>
             <br>
             <div class="reponse code">
                 <pre><code class="language-python">
-def test_croissance_moyenne():
-    assert croissance_moyenne(plantes) == 79.0, "Echec Test 1, données plantes"
-    assert croissance_moyenne([]) == None, "Echec Test 2, liste vide"
+def test_total_simple():
+    e_ada = chargement_json("empreinte_ada_agr.json")
+    if est_dictionnaire(e_ada):
+        # On a calculé depuis le fichier, on doit obtenir 7252 donc on prévient
+        # l'erreur avant le return.
+        assert total_simple(e_ada) == 7252, "Echec du calcul"
+        return total_simple(e_ada)
                 </code></pre>
             </div>
         </div>
         <div class="question">
             <h3>Question 2</h3>
             <div class="consigne">
-                Écrire une fonction dictionnaire_mesure(plantes, mesures) qui prend en paramètre la liste des plantes et la liste des mesures. Elle doit renvoyer un dictionnaire où chaque clé est le nom d’une plante (présente dans la liste plantes), et chaque valeur associée est la liste des mesures concernant cette plante spécifique.<br>
-                Si une plante de la liste ne possède aucune mesure associée, la liste correspondante dans le dictionnaire devra être vide. Concevoir une série de tests pertinente pour vérifier le bon comportement de cette fonction.<br>
-                Exemple de retour :<br>
-                <pre>
-{
-    "plante1": [
-        {
-            "plante": "plante1",
-            "jour": 1,
-            "hauteur": 100,
-            "temperature": 20,
-            "humidite": 100,
-        },
-        {
-            "plante": "plante1",
-            "jour": 2,
-            "hauteur": 101,
-            "temperature": 20,
-            "humidite": 100,
-        },
-    ],
-    "plante2": [
-        {
-            "plante": "plante2",
-            "jour": 1,
-            "hauteur": 10,
-            "temperature": 20,
-            "humidite": 20,
-        }
-    ],
-}
-            </pre>
+                En utilisant la fonction est_dictionnaire qui teste la nature d’une valeur, écrire le corps de la fonction récursive <code>total_rec</code> qui calcule la somme des valeurs numériques présentes dans des dictionnaires imbriqués. Des tests sont fournis dans la fonction <code>test_total_rec</code>, on pourra les compléter par un cas plus proche de la structure présente dans <code>empreinte_ada.json</code>.
             </div>
             <div class="reponse code">
                 <pre><code class="language-python">
-def dictionnaire_mesure(plantes, mesures):
-    dico = {}
-    for plante in plantes:
-        dico[plante.nom] = []
-        
-    for mesure in mesures:
-        if mesure['plante'] in dico:
-            dico[mesure['plante']].append(mesure)
+def total_rec(empreinte):
+    '''Fonction récursive qui renvoie l'empreinte carbone totale représentée
+    par un dictionnaire dont les valeurs peuvent aussi être des dictionnaires'''
+    s = 0
+    for key in empreinte:
+        if not est_dictionnaire(empreinte[key]):
+            s += empreinte[key]
         else:
-            dico[mesure['plante']] = []
-    return dico
+            s += total_rec(empreinte[key])
+    return s
                 </code></pre>
             </div>
             <br>
             <div class="reponse text">
-                Afin de réaliser un test pertinent pour cette fonction, on utilisera un jeu de donné modifié et biaisé (d'autres tests sont tout de même valables), à savoir :
+                Afin d'ajouter un test pertinent pour cette fonction, on utilisera le fichier <code>empreinte_ada.json</code> qui contient des dictionnaires imbriqués. <br>
+                Le test peut être rédigé de la manière suivante :
             </div>
             <div class="reponse code">
                 <pre><code class="language-python">
-def test_dictionnaire_mesure():
-    from plantes import Plante
-    plantes_liste = [
-        Plante("Basilic", "Ocimum basilicum", 60, 40, "plein soleil"),
-        Plante("Tomate", "Solanum lycopersicum", 80, 100, "plein soleil"),
-        Plante("Iris", "Iris", 80, 50, "plein soleil")
-    ]
-    mesures = [
-        {'jour': 1, 'plante': 'Basilic', 'hauteur': 0.85, 'temperature': 29.3, 'humidite': 50.89},
-        {'jour': 1, 'plante': 'Tomate', 'hauteur': 1.27, 'temperature': 21.51, 'humidite': 47.19}
-    ]
-    assert dictionnaire_mesure(plantes_liste, mesures) == {"Basilic": [{"plante": "Basilic","jour": 1,"hauteur": 0.85,"temperature": 29.3,"humidite": 50.89,}],"Tomate": [{"plante": "Tomate","jour": 1,"hauteur": 1.27,"temperature": 21.51,"humidite": 47.19,}],"Iris": []}
+def test_total_rec():
+    test_dico1 = {"a": 1, "d": 2}
+    assert total_rec(test_dico1) == 3
+    test_dico2 = {"a": {"b": 1, "c": 2}, "d": {"e": 3}}
+    assert total_rec(test_dico2) == 6
+    # Test ajouté avec l'empreinte totale de Ada (= 7252) :
+    e_ada = chargement_json("empreinte_ada.json")
+    assert total_rec(e_ada) == 7252, "Echec du Test pour données complètes"
                 </pre></code>
             </div>
         </div>
         <div class="question">
             <h3>Question 3</h3>
             <div class="consigne">
-                Exécuter le test de la fonction <code>test_purger</code> et analyser son code pour identifier la source de cette erreur logique.
+                Lorsqu’on exécute la fonction alerte_valeur_aberrante sur le dictionnaire complet d’Ada avec une limite fixée à 1000, elle ne détecte aucune valeur aberrante, alors que le poste “Chauffage individuel” s’élève à 1500.<br>
+                Expliquer précisément l’origine de cette erreur de conception et proposer une version corrigée de la fonction.
             </div>
             <div class="reponse text">
                 On exécute dans la console :
@@ -175,36 +146,133 @@ def test_dictionnaire_mesure():
             <br>
             <div class="reponse code">
                 <pre><code class="language-python">
-test_purger()
->>  Résultat après la purge :
-    Jour 2 : 19.0°C
-    Jour 3 : 22.0°C
-    Jour 5 : 29.0°C
+e_ada = chargement_json("empreinte_ada.json")
+alerte_valeur_aberrante(e_ada, 1000)
+>> True
                 </pre></code>
             </div>
             <br>
             <div class="reponse text">
-                On remarque que l'erreur provient du .remove() qui est utilisé afin de supprimer une mesure. Le seul problème est que celui-ci modifie la liste et donc, son indexation, ce qui fait que les indices suivants ne correspondent plus à la même mesure. Le résultat est donc faussé.
+                <strong>Attention : l'énoncé est fautif car la fonction renvoie bien True. Cependant, la fonction reste fautive car elle ne parcourt par l'entiereté d'un dictionnaire. </strong>
+                <br>
+                Voici une proposition de correction :
+                <br>
+                <u>On a par ailleurs rajouté une sécurité qui affiche si le dictionnaire est vide mais renvoie tout de même False afin de s'assurer que l'utilisateur pourra tout de même s'en servir.</u>
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def alerte_valeur_aberrante(empreinte, limite):
+    """
+    Fonction censée déterminer si au moins une valeur du dictionnaire
+    dépasse strictement la limite donnée.
+    """
+    if empreinte == {}:
+        return "Votre dictionnaire est vide."
+    for valeur in empreinte.values():
+        if est_dictionnaire(valeur):
+            if alerte_valeur_aberrante(valeur, limite):
+                return True
+        else:
+            if valeur > limite:
+                return True
+    return False
+                </pre></code>
             </div>
         </div>
         <div class="question">
             <h3>Question 4</h3>
             <div class="consigne">
-                Proposer une version corrigée de la fonction répondant parfaitement à l’objectif.
+                Afin de prévenir toute régression future sur la fonction <code>alerte_valeur_aberrante</code> corrigée, il convient de définir une stratégie de validation robuste.
+                <br>
+                Proposer un jeu de tests pertinent pour cette fonction. Pour chaque cas de test envisagé, préciser la structure du dictionnaire fourni en entrée, le résultat attendu et la particularité algorithmique que ce test permet de vérifier.
+            </div>
+            <div class="reponse text">
+                Voici 7 tests avec leur jeu de données personnalisés réalisables :
             </div>
             <div class="reponse code">
                 <pre><code class="language-python">
-# Fonction corrigée :
-def purger_mesures_extremes(liste_mesures):
-    """
-    Supprime de la liste toutes les mesures dont la température 
-    n'est pas comprise entre 20 et 25°C inclus.
-    """
-    copie = liste_mesures.copy()
-    for mesure in copie:
-        if mesure['temperature'] < 20 or mesure['temperature'] > 25:
-            liste_mesures.remove(mesure)
-    return liste_mesures
+def tests_valeur_aberrante():
+    dico_simple = {
+        "valeur_a": 2,
+        "valeur_b": 5,
+        "valeur_c": 10,
+        "valeur_d": 0,
+        "valeur_e": 46
+     }
+    # T1 - On teste avec un dictionnaire simple avec une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_simple, 45) == True,"Echec Test 1"
+
+    #T2 - On teste avec un dictionnaire simple sans une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_simple, 50) == False,"Echec Test 2"
+
+    #T3 - On teste avec un dictionnaire simple dont la valeur max est la limite :
+    assert alerte_valeur_aberrante(dico_simple, 46) == False,"Echec Test 3"
+
+    dico_complexe = {
+        "valeur_a": 2,
+        "valeur_b": {
+            "valeur_ba": 3,
+            "valeur_bb": 19028,
+            "valeur_bc": 0,
+            "valeur_bd": 1039
+        },
+        "valeur_c": 10,
+        "valeur_d": {
+            "valeur_da": 2,
+            "valeur_db": 1892
+        },
+        "valeur_e": {
+            "valeur_ea": {
+                "valeur_eaa": 2,
+                "valeur_eab": {
+                    "valeur_eaba": 20001
+                },
+                "valeur_eac": 2900
+            },
+            "valeur_eb": 29
+        }
+     }
+    # T4 - On teste avec un dictionnaire complexe avec une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_complexe, 20000) == True, "Echec Test 4"
+
+    # T5 - On teste avec un dictionnaire complexe sans une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_complexe, 900000) == False, "Echec Test 5"
+
+    dico_nul = {}
+    # T6 - On teste avec un dictionnaire nul :
+    assert alerte_valeur_aberrante(dico_nul, 0) == False, "Echec Test 6"
+
+    dico_negatif = {
+        "valeur_a": -2,
+        "valeur_b": {
+            "valeur_ba": 3,
+            "valeur_bb": -19028,
+            "valeur_bc": 0,
+            "valeur_bd": -1039
+        },
+        "valeur_c": -10,
+        "valeur_d": {
+            "valeur_da": 2,
+            "valeur_db": -1892
+        },
+        "valeur_e": {
+            "valeur_ea": {
+                "valeur_eaa": 2,
+                "valeur_eab": {
+                    "valeur_eaba": 20001
+                },
+                "valeur_eac": -2900
+            },
+            "valeur_eb": -29
+        }
+     }
+
+    # T7 - On teste avec un dictionnaire complexe negatif avec une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_negatif, -2) == True, "Echec Test 7"
+
+    # T8 - On teste avec un dictionnaire complexe negatif sans une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_negatif, 900000) == False, "Echec Test 8"
                 </pre></code>
             </div>
         </div>
