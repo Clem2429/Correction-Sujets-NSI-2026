@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez les sujets corrigés de NSI pour l'année 2026. Préparez-vous efficacement avec nos ressources complètes et détaillées.">
+    <meta name="keywords" content="sujets corrigés NSI 2026, préparation NSI, ressources NSI, exercices NSI, cours NSI, révisions NSI">
+    <title>Corrigé Sujet N°6</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-up-icon lucide-circle-chevron-up"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°6</h1>
+        <h2>- Smoothies -</h2>
+        <div class="link-pdf only-pdf">
+            <span>Le Dossier ZIP de l'épreuve pratique N°6 se situe à l'adresse suivante :</span>
+            <br>
+            <a href="https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f084b11c7d6a0bc9f9fe" target="_blank">https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f084b11c7d6a0bc9f9fe</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="link-pdf only-pdf">
+            <span>Ce corrigé est tiré du site suivant :</span>
+            <br>
+            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="link-pdf only-pdf">
+            <span>La version du fichier Python corrigé est accessible à l'adresse suivante :</span>
+            <br>
+            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/smoothies_corrige.py" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/smoothies_corrige.py</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="info-sujet only-pdf">
+            <ul>
+                <li>Ce sujet est le N°6 de la banque des sujets pratiques de NSI 2026;</li>
+                <li>Ce sujet (corrigé) comporte 5 questions ;</li>
+                <li>Chaque réponse à une question se trouve sur une page distincte.</li>
+            </ul>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez téléchargez les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download="init/26_BCG_NSI_6.zip">Dossier (ZIP)</a>
+            <a download="init/sujet.pdf">Sujet (PDF)</a>
+            <a download="init/smoothie.py">Fichier Python Initial</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download="corrige/corrige.pdf">Corrigé V1 (PDF)</a>
+            <a download="corrige/smoothies_corrige.py">Fichier Python Corrigé V1</a>
+            <!-- <a download="corrige/smoothies_corrige_warren.py">Fichier Python Corrigé V2</a> -->
+        </div>
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Compléter le corps de la fonction <code>total_simple</code>. Ajouter un test permettant d’afficher l’empreinte carbone totale d’Ada, en utilisant les fonctions fournies pour accéder au fichier <code>empreinte_ada_aggr.json</code>.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def total_simple(empreinte):
+    """Fonction qui renvoie l'empreinte carbone totale d'un dictionnaire associant
+    une empreinte carbone à des noms de catégories"""
+    s = 0
+    for key in empreinte:
+        s += empreinte[key]
+    return s
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                Afin d'afficher l'empreinte carbone totale d'Ada, on peut utiliser le code suivant :
+                <br> (Et tester sa valeur, au cas où...)
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def test_total_simple():
+    e_ada = chargement_json("empreinte_ada_agr.json")
+    if est_dictionnaire(e_ada):
+        # On a calculé depuis le fichier, on doit obtenir 7252 donc on prévient
+        # l'erreur avant le return.
+        assert total_simple(e_ada) == 7252, "Echec du calcul"
+        return total_simple(e_ada)
+                </code></pre>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                En utilisant la fonction est_dictionnaire qui teste la nature d’une valeur, écrire le corps de la fonction récursive <code>total_rec</code> qui calcule la somme des valeurs numériques présentes dans des dictionnaires imbriqués. Des tests sont fournis dans la fonction <code>test_total_rec</code>, on pourra les compléter par un cas plus proche de la structure présente dans <code>empreinte_ada.json</code>.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def total_rec(empreinte):
+    '''Fonction récursive qui renvoie l'empreinte carbone totale représentée
+    par un dictionnaire dont les valeurs peuvent aussi être des dictionnaires'''
+    s = 0
+    for key in empreinte:
+        if not est_dictionnaire(empreinte[key]):
+            s += empreinte[key]
+        else:
+            s += total_rec(empreinte[key])
+    return s
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                Afin d'ajouter un test pertinent pour cette fonction, on utilisera le fichier <code>empreinte_ada.json</code> qui contient des dictionnaires imbriqués. <br>
+                Le test peut être rédigé de la manière suivante :
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def test_total_rec():
+    test_dico1 = {"a": 1, "d": 2}
+    assert total_rec(test_dico1) == 3
+    test_dico2 = {"a": {"b": 1, "c": 2}, "d": {"e": 3}}
+    assert total_rec(test_dico2) == 6
+    # Test ajouté avec l'empreinte totale de Ada (= 7252) :
+    e_ada = chargement_json("empreinte_ada.json")
+    assert total_rec(e_ada) == 7252, "Echec du Test pour données complètes"
+                </pre></code>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                Lorsqu’on exécute la fonction alerte_valeur_aberrante sur le dictionnaire complet d’Ada avec une limite fixée à 1000, elle ne détecte aucune valeur aberrante, alors que le poste “Chauffage individuel” s’élève à 1500.<br>
+                Expliquer précisément l’origine de cette erreur de conception et proposer une version corrigée de la fonction.
+            </div>
+            <div class="reponse text">
+                On exécute dans la console :
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+e_ada = chargement_json("empreinte_ada.json")
+alerte_valeur_aberrante(e_ada, 1000)
+>> True
+                </pre></code>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Attention : l'énoncé est fautif car la fonction renvoie bien True. Cependant, la fonction reste fautive car elle ne parcourt par l'entiereté d'un dictionnaire. </strong>
+                <br>
+                Voici une proposition de correction :
+                <br>
+                <u>On a par ailleurs rajouté une sécurité qui affiche si le dictionnaire est vide mais renvoie tout de même False afin de s'assurer que l'utilisateur pourra tout de même s'en servir.</u>
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def alerte_valeur_aberrante(empreinte, limite):
+    """
+    Fonction censée déterminer si au moins une valeur du dictionnaire
+    dépasse strictement la limite donnée.
+    """
+    if empreinte == {}:
+        return "Votre dictionnaire est vide."
+    for valeur in empreinte.values():
+        if est_dictionnaire(valeur):
+            if alerte_valeur_aberrante(valeur, limite):
+                return True
+        else:
+            if valeur > limite:
+                return True
+    return False
+                </pre></code>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                Afin de prévenir toute régression future sur la fonction <code>alerte_valeur_aberrante</code> corrigée, il convient de définir une stratégie de validation robuste.
+                <br>
+                Proposer un jeu de tests pertinent pour cette fonction. Pour chaque cas de test envisagé, préciser la structure du dictionnaire fourni en entrée, le résultat attendu et la particularité algorithmique que ce test permet de vérifier.
+            </div>
+            <div class="reponse text">
+                Voici 7 tests avec leur jeu de données personnalisés réalisables :
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def tests_valeur_aberrante():
+    dico_simple = {
+        "valeur_a": 2,
+        "valeur_b": 5,
+        "valeur_c": 10,
+        "valeur_d": 0,
+        "valeur_e": 46
+     }
+    # T1 - On teste avec un dictionnaire simple avec une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_simple, 45) == True,"Echec Test 1"
+
+    #T2 - On teste avec un dictionnaire simple sans une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_simple, 50) == False,"Echec Test 2"
+
+    #T3 - On teste avec un dictionnaire simple dont la valeur max est la limite :
+    assert alerte_valeur_aberrante(dico_simple, 46) == False,"Echec Test 3"
+
+    dico_complexe = {
+        "valeur_a": 2,
+        "valeur_b": {
+            "valeur_ba": 3,
+            "valeur_bb": 19028,
+            "valeur_bc": 0,
+            "valeur_bd": 1039
+        },
+        "valeur_c": 10,
+        "valeur_d": {
+            "valeur_da": 2,
+            "valeur_db": 1892
+        },
+        "valeur_e": {
+            "valeur_ea": {
+                "valeur_eaa": 2,
+                "valeur_eab": {
+                    "valeur_eaba": 20001
+                },
+                "valeur_eac": 2900
+            },
+            "valeur_eb": 29
+        }
+     }
+    # T4 - On teste avec un dictionnaire complexe avec une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_complexe, 20000) == True, "Echec Test 4"
+
+    # T5 - On teste avec un dictionnaire complexe sans une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_complexe, 900000) == False, "Echec Test 5"
+
+    dico_nul = {}
+    # T6 - On teste avec un dictionnaire nul :
+    assert alerte_valeur_aberrante(dico_nul, 0) == False, "Echec Test 6"
+
+    dico_negatif = {
+        "valeur_a": -2,
+        "valeur_b": {
+            "valeur_ba": 3,
+            "valeur_bb": -19028,
+            "valeur_bc": 0,
+            "valeur_bd": -1039
+        },
+        "valeur_c": -10,
+        "valeur_d": {
+            "valeur_da": 2,
+            "valeur_db": -1892
+        },
+        "valeur_e": {
+            "valeur_ea": {
+                "valeur_eaa": 2,
+                "valeur_eab": {
+                    "valeur_eaba": 20001
+                },
+                "valeur_eac": -2900
+            },
+            "valeur_eb": -29
+        }
+     }
+
+    # T7 - On teste avec un dictionnaire complexe negatif avec une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_negatif, -2) == True, "Echec Test 7"
+
+    # T8 - On teste avec un dictionnaire complexe negatif sans une valeur aberrante :
+    assert alerte_valeur_aberrante(dico_negatif, 900000) == False, "Echec Test 8"
+                </pre></code>
+            </div>
+        </div>
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>
