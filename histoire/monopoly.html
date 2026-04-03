@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="description" content="Monopoly Game">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./monopoly.css">
+    <title>Monopoly Historique</title>
+</head>
+<body>
+    <main>
+        <div class="text">
+            <h1>Monopoly Historique</h1>
+            <h2>Bienvenue dans le jeu de Monopoly !</h2>
+            <p>Le Monopoly est un jeu de société populaire qui simule l'achat, la vente et la gestion de propriétés immobilières. Le but du jeu est de devenir le joueur le plus riche en achetant, en louant et en vendant des propriétés tout en évitant la faillite.</p>
+            <h3>Règles du jeu :</h3>
+            <ul>
+                <li>Chaque joueur commence avec une somme d'argent initiale.</li>
+                <li>Les joueurs lancent les dés pour avancer sur le plateau de jeu.</li>
+                <li>Lorsqu'un joueur atterrit sur une propriété, il peut l'acheter ou la mettre aux enchères.</li>
+                <li>Les joueurs peuvent construire des maisons et des hôtels sur leurs propriétés pour augmenter les loyers.</li>
+                <li>Le jeu se termine lorsque tous les autres joueurs sont en faillite, et le joueur restant est déclaré vainqueur.</li>
+            </ul>
+        </div>
+       
+        <div id="board-game">
+            <h1>GUERRE FROIDE</h1>
+            <!--row 1 -->
+            <cell id="cell-1" class="name">
+                <img src="https://les-yeux-du-monde.fr/wp-content/uploads/2019/04/URSS-Gagarine-course-espace-les-yeux-du-monde.jpg" alt="Conquête Spatiale URSS">
+                <div class="name">Conquête Spatiale URSS</div>
+            </cell>
+            <cell id="cell-2" class="name">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Cuban_missiles.jpg" alt="">
+                <div class="name">crise de missiles de cuba site de </div>
+            </cell>
+            <cell id="cell-3" class="name">
+                <img src="https://cdn.britannica.com/65/180265-138-827C0499/Overview-building-Berlin-Wall-1961.jpg?w=800&h=450&c=crop" alt="iron curtains">
+                <div class="name">rideau de fer</div>
+            </cell>
+            <cell id="cell-4" class="name">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ5hOamADaeuVXVo3XnyM9mjWzqSzVLSjXfg&s" alt="">
+                <div class="name">crise de gue</div>
+            </cell>
+            <cell id="cell-5" class="name">
+                <img src="https://c.files.bbci.co.uk/11144/production/_126865996_gettyimages-104405108.jpg" alt="">
+                <div class="name">crise de guerre froide</div>
+            </cell>
+            <cell id="cell-6" class="name">
+                <img src="https://www.radiofrance.fr/pikapi/images/c0b3f1cd-cb4d-46bc-be17-41601aa873f3/2048" alt="Staline">
+                <div class="name">Gare de Staline</div>
+            </cell>
+            <cell id="cell-7" class="name">
+                <img src="https://cdn.prod.www.spiegel.de/images/98105a93-0001-0005-0000-000001231875_w335_r1.3680781758957654_fpx36.43_fpy49.84.jpg" alt="">
+                <div class="name">Prague</div>
+            </cell>
+            <cell id="cell-8" class="name">
+                <img src="https://docs.rferl.org/Infographics/2018/2018_08/2018_08_68_Slider/assets/images/hero.jpg" alt="">
+                <div class="name">Crushing of the Prague</div>
+            </cell>
+            <cell id="cell-9" class="name">
+                <img src="https://histoire-image.org/sites/default/files/2024-01/check-point-charlie-berlin.jpg" alt="">
+                <div class="name">CheckPoint Charlie</div>
+            </cell>
+            <cell id="cell-10" class="name">
+                <img src="https://marxiste.org/images/Printemps-de-Prague.jpg" alt="">
+                <div class="name">printemps de Prague</div>
+            </cell>
+            <cell id="cell-11" class="name">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb8h7ftXlrO1HHR1-EBxGc2KrdeVeXsLZ3zg&s" alt="">
+                <div class="name">Casque Bleu</div>
+            </cell>
+            <!--row 2 -->
+            <cell id="cell-12" class="name">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMFhYKhlt4cW-WSBfEQXW6SaRI1aP9Ns24uA&s" alt="">
+                <div class="name">Guerre de Corée</div>
+            </cell>
+            <cell id="cell-13" class="hidden"></cell>
+            <cell id="cell-14" class="hidden"></cell>
+            <cell id="cell-15" class="hidden"></cell>
+            <cell id="cell-16" class="hidden"></cell>
+            <cell id="cell-17" class="hidden"></cell>
+            <cell id="cell-18" class="hidden"></cell>
+            <cell id="cell-19" class="hidden"></cell>
+            <cell id="cell-20" class="hidden"></cell>
+            <cell id="cell-21" class="hidden"></cell>
+            <cell id="cell-22" class="name">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Kossuth_Lajos_utca_-_K%C3%A1roly_%28Tan%C3%A1cs%29_k%C3%B6r%C3%BAt_sarok._Fortepan_23591.jpg/250px-Kossuth_Lajos_utca_-_K%C3%A1roly_%28Tan%C3%A1cs%29_k%C3%B6r%C3%BAt_sarok._Fortepan_23591.jpg" alt="">
+                <div class="name">révolution hongroise de 19</div>
+            </cell>
+            <!--row 3-->
+            <cell id="cell-23" class="name">
+                <img src="https://www.alliiertenmuseum.de/wp-content/uploads/alliierten-museum-chinesische-gefangene.webp" alt="">
+                <div class="name">Guerre de Corée</div>
+            </cell>
+            <cell id="cell-24" class="hidden"></cell>
+            <cell id="cell-25" class="hidden"></cell>
+            <cell id="cell-26" class="hidden"></cell>
+            <cell id="cell-27" class="hidden"></cell>
+            <cell id="cell-28" class="hidden"></cell>
+            <cell id="cell-29" class="hidden"></cell>
+            <cell id="cell-30" class="hidden"></cell>
+            <cell id="cell-31" class="hidden"></cell>
+            <cell id="cell-32" class="hidden"></cell>
+            <cell id="cell-33" class="name">
+                <img src="https://www.en-attendant-nadeau.fr/wp-content/uploads/2016/10/budapest_56_article.jpg" alt="">
+                <div class="name">Hongrie Budapest 1956</div>
+            </cell>
+            <!-- row 4 -->
+            <cell id="cell-34" class="name">
+                <img src="https://c8.alamy.com/compfr/rht107/cambodge-phnom-penh-street-113-musee-du-genocide-de-tuol-sleng-l-affichage-des-photos-des-victimes-final-dans-les-classes-de-l-ancien-lycee-tuol-svey-prey-rht107.jpg" alt="musée des victimes du génocide à Vilnius">
+                <div class="name">musée des victimes du génocide à Vilnius</div>
+            </cell>
+            <cell id="cell-35" class="hidden"></cell>
+            <cell id="cell-36" class="hidden"></cell>
+            <cell id="cell-37" class="hidden"></cell>
+            <cell id="cell-38" class="hidden"></cell>
+            <cell id="cell-39" class="hidden"></cell>
+            <cell id="cell-40" class="hidden"></cell>
+            <cell id="cell-41" class="hidden"></cell>
+            <cell id="cell-42" class="hidden"></cell>
+            <cell id="cell-43" class="hidden"></cell>
+            <cell id="cell-44" class="name">
+                <img src="https://famoushotels.org/images/hotels/_detail_image/Historic-Greenbrier-front-1913.jpg" alt="">
+                <div class="name">Hotel Greenbrier</div>
+            </cell>
+            <!-- row 5 -->
+            <cell id="cell-45" class="name">
+                <img src="https://www.herodote.net/Images/Coree_guerre.jpg" alt="">
+                <div class="name">Guerre de Corée</div>
+            </cell>
+            <cell id="cell-46" class="hidden"></cell>
+            <cell id="cell-47" class="hidden"></cell>
+            <cell id="cell-48" class="hidden"></cell>
+            <cell id="cell-49" class="hidden"></cell>
+            <cell id="cell-50" class="hidden"></cell>
+            <cell id="cell-51" class="hidden"></cell>
+            <cell id="cell-52" class="hidden"></cell>
+            <cell id="cell-53" class="hidden"></cell>
+            <cell id="cell-54" class="hidden"></cell>
+            <cell id="cell-55" class="name">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCw3y9_mge5WZ9twwEsN9u0LmhcPicmdGrtg&s" alt="">
+                <div class="name">Hongrie 1956</div>
+            </cell>
+            <!-- row 6 -->
+            <cell id="cell-56" class="name">
+                <img src="https://blog-histoire.fr/wp-content/uploads/2011/10/Krushchev1.jpg" alt="khrouchtchev">
+                <div class="name">Gare de khrouchtchev</div>
+            </cell>
+            <cell id="cell-57" class="hidden"></cell>
+            <cell id="cell-58" class="hidden"></cell>
+            <cell id="cell-59" class="hidden"></cell>
+            <cell id="cell-60" class="hidden"></cell>
+            <cell id="cell-61" class="hidden"></cell>
+            <cell id="cell-62" class="hidden"></cell>
+            <cell id="cell-63" class="hidden"></cell>
+            <cell id="cell-64" class="hidden"></cell>
+            <cell id="cell-65" class="hidden"></cell>
+            <cell id="cell-66" class="name">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dwight_D._Eisenhower%2C_official_photo_portrait%2C_May_29%2C_1959.jpg/250px-Dwight_D._Eisenhower%2C_official_photo_portrait%2C_May_29%2C_1959.jpg" alt="">
+                <div class="name">Gare de Eisenhower</div>
+            </cell>
+            <!-- row 7 -->
+            <cell id="cell-67" class="name">
+                <img src="https://i0.wp.com/larevuedhistoiremilitaire.fr/wp-content/uploads/2022/07/84924259_589909981559133_3668750601702866944_n.jpg?resize=720%2C454&ssl=1" alt="">
+                <div class="name">Guerre du Vietnam</div>
+            </cell>
+            <cell id="cell-68" class="hidden"></cell>
+            <cell id="cell-69" class="hidden"></cell>
+            <cell id="cell-70" class="hidden"></cell>
+            <cell id="cell-71" class="hidden"></cell>
+            <cell id="cell-72" class="hidden"></cell>
+            <cell id="cell-73" class="hidden"></cell>
+            <cell id="cell-74" class="hidden"></cell>
+            <cell id="cell-75" class="hidden"></cell>
+            <cell id="cell-76" class="hidden"></cell>
+            <cell id="cell-77" class="name">
+                <img src="https://www.terres-de-russie.com/uploads/sites/28/2019/08/kremlin-russie.jpeg" alt="Kremlin">
+                <div class="name">Kremlin</div>
+            </cell>
+             <!-- row 8 -->
+            <cell id="cell-78" class="name">
+                <img src="https://s.rfi.fr/media/display/7ef898f4-0f9a-11f0-b480-005056a90284/w:1280/p:16x9/F38.jpg" alt="">
+                <div class="name">Guerre du Vietnam</div>
+            </cell>
+            <cell id="cell-79" class="hidden"></cell>
+            <cell id="cell-80" class="hidden"></cell>
+            <cell id="cell-81" class="hidden"></cell>
+            <cell id="cell-82" class="hidden"></cell>
+            <cell id="cell-83" class="hidden"></cell>
+            <cell id="cell-84" class="hidden"></cell>
+            <cell id="cell-85" class="hidden"></cell>
+            <cell id="cell-86" class="hidden"></cell>
+            <cell id="cell-87" class="hidden"></cell>
+            <cell id="cell-88" class="name">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuGm-Ooy13s4N1kcsIwLu6w6Fw3Jw21zdZyw&s" alt="">
+                <div class="name">Rue Guerre d'Afghanistan 1979</div>
+            </cell>
+             <!-- row 9 -->
+            <cell id="cell-89" class="name">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzEmTTz4UdVHarS08E6sSZIbb805qdfb2-SA&s" alt="Maison Blanche">
+                <div class="name">Maison Blanche</div>
+            </cell>
+            <cell id="cell-90" class="hidden"></cell>
+            <cell id="cell-91" class="hidden"></cell>
+            <cell id="cell-92" class="hidden"></cell>
+            <cell id="cell-93" class="hidden"></cell>
+            <cell id="cell-94" class="hidden"></cell>
+            <cell id="cell-95" class="hidden"></cell>
+            <cell id="cell-96" class="hidden"></cell>
+            <cell id="cell-97" class="hidden"></cell>
+            <cell id="cell-98" class="hidden"></cell>
+            <cell id="cell-99" class="name">
+                <img src="https://en.numista.com/catalogue/photos/ancienne_urss/1309-original.jpg" alt="">
+                <div class="name">Rouble ₽</div>
+            </cell>
+             <!-- row 10 -->
+            <cell id="cell-100" class="name">
+                <img src="https://www.herodote.net/_images/vietnam-bombardement.jpg" alt="">
+                <div class="name">Guerre du Vietnam</div>
+            </cell>
+            <cell id="cell-101" class="hidden"></cell>
+            <cell id="cell-102" class="hidden"></cell>
+            <cell id="cell-103" class="hidden"></cell>
+            <cell id="cell-104" class="hidden"></cell>
+            <cell id="cell-105" class="hidden"></cell>
+            <cell id="cell-106" class="hidden"></cell>
+            <cell id="cell-107" class="hidden"></cell>
+            <cell id="cell-108" class="hidden"></cell>
+            <cell id="cell-109" class="hidden"></cell>
+            <cell id="cell-110" class="name">
+                <img src="https://img.lapresse.ca/924x615/201902/12/1612603-apres-dix-ans-conflit-15.jpg" alt="">
+                <div class="name">guerre afghanistan 1989</div>
+            </cell>
+             <!-- row 11 -->
+            <cell id="cell-111" class="name">
+                <img src="https://lh3.googleusercontent.com/CZkX58hU7zz_Ausclp6eclyB4Khx10S7oinPJ1QU1-2EuJo2ci6FXMfAruko0pvsNw7m3qfgmTP4CGAhsNTWM6j6Z-U7nJB5b7TcLk2X1V4_m1XQX1wS7C45jF0J" alt="">
+                <div class="name">Goulag</div>
+            </cell>
+            <cell id="cell-112" class="name">
+                <img src="https://souffleinedit.com/wp-content/uploads/2025/03/BERLIN-1989.jpg" alt="">
+                <div class="name">Mur de Berlin</div>
+            </cell>
+            <cell id="cell-113" class="name">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxbk6_ywlm2PyuLnCvgI7S3kPpaMhRZHNxeg&s" alt="">
+                <div class="name">Mur de Berlin</div>
+            </cell>
+            <cell id="cell-114" class="name">
+                <img src="https://img.20mn.fr/1awlW53IQsG3DponDqVtYA/1444x920_siege-fsb-ex-kgb-moscou" alt="">
+                <div class="name">KGB</div>
+            </cell>
+            <cell id="cell-115" class="name">
+                <img src="https://www.lesoir.be/sites/default/files/dpistyles_v2/ena_16_9_extra_big/2019/10/31/node_257317/27223489/public/2019/10/31/B9721416219Z.1_20191031135122_000+GLHEQEA4C.2-0.jpg?itok=O0hb-jUP1572605403" alt="">
+                <div class="name">Construction Mur de Berlin</div>
+            </cell>
+            <cell id="cell-116" class="name">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVC0TeodIfsDj59hS-O67e83OtSmoQ9ixtgg&s" alt="Kennedy">
+                <div class="name">gare de Kennedy</div>
+            </cell>
+            <cell id="cell-117" class="name">
+                <img src="https://previews.123rf.com/images/mattz90/mattz901608/mattz90160800003/62120801-american-dollar-symbol-us-dollar-texture.jpg" alt="">
+                <div class="name">Dollar $</div>
+            </cell>
+            <cell id="cell-118" class="name">
+                <img src="https://images.radio-canada.ca/q_auto,w_720/v1/ici-premiere/16x9/histo-blocus-berlin-reichstag-manifestation.jpg" alt="">
+                <div class="name">Blocus de Berlin 1948</div>
+            </cell>
+            <cell id="cell-119" class="name">
+                <img src="https://www.radiofrance.fr/pikapi/images/cea8ea70-3980-441a-ae84-954f81779672/2048" alt="">
+                <div class="name">CIA</div>
+            </cell>
+            <cell id="cell-120" class="name">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/C-54_landing_at_Tempelhof.jpg" alt="">
+                <div class="name">Blocus de Berlin 1948</div>
+            </cell>
+            <cell id="cell-121" class="name">
+                <img src="https://www.radiofrance.fr/s3/cruiser-production/2018/10/742e618b-f935-41cc-9776-1961bb7362b1/soviet_champion_vladimir_kuts_l_leads_the_olympic_10000m_that_he_won_23_november_1956_at_the_olympic_stadium_in_melbourne_where_he_captured_also_the_5000m_gold_medal._vladimir_kuts_was_the_first_ever_soviet_athlete.jpg" alt="">
+                <div class="name">case départ</div>
+            </cell>
+        </div>
+    </main>
+</body>
+</html>
