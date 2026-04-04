@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez les sujets corrigés de NSI pour l'année 2026. Préparez-vous efficacement avec nos ressources complètes et détaillées.">
+    <meta name="keywords" content="sujets corrigés NSI 2026, préparation NSI, ressources NSI, exercices NSI, cours NSI, révisions NSI">
+    <title>Corrigé Sujet N°7</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-up-icon lucide-circle-chevron-up"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°7</h1>
+        <h2>- Coccinelles & Pucerons -</h2>
+        <div class="link-pdf only-pdf">
+            <span>Le Dossier ZIP de l'épreuve pratique N°7 se situe à l'adresse suivante :</span>
+            <br>
+            <a href="https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f0a48a3f1b2f2dd065ca" target="_blank">https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f0a48a3f1b2f2dd065ca</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="link-pdf only-pdf">
+            <span>Ce corrigé est tiré du site suivant :</span>
+            <br>
+            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="link-pdf only-pdf">
+            <span>La version du fichier Python corrigé est accessible à l'adresse suivante :</span>
+            <br>
+            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/coccinnelles_corrige.py" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/coccinnelles_corrige.py</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="info-sujet only-pdf">
+            <ul>
+                <li>Ce sujet est le N°7 de la banque des sujets pratiques de NSI 2026;</li>
+                <li>Ce sujet (corrigé) comporte 4 questions ;</li>
+                <li>Chaque réponse à une question se trouve sur une page distincte.</li>
+            </ul>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez téléchargez les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download="init/26_BCG_NSI_7.zip">Dossier (ZIP)</a>
+            <a download="init/sujet.pdf">Sujet (PDF)</a>
+            <a download="init/coccinnelles.py">Fichier Python Initial</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download="corrige/corrige.pdf">Corrigé V1 (PDF)</a>
+            <a download="corrige/coccinnelles_corrige.py">Fichier Python Corrigé V1</a>
+            <!-- <a download="corrige/coccinnelles_corrige_warren.py">Fichier Python Corrigé V2</a> -->
+        </div>
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                On souhaite observer le comportement du modèle sur une courte période. 
+                <br>
+                Créer une population initiale contenant 3 coccinelles (2 femelles et 1 mâle), toutes âgées de 10 jours et ayant un niveau de nutrition de 2. Le nombre initial de pucerons est fixé à 200. <br>
+                Écrire une séquence d’instructions (utilisant une boucle) permettant de simuler l’évolution de ce petit écosystème sur 5 jours consécutifs, en appelant la fonction evolution.
+                <br>
+                Afficher le nombre de coccinelles et de pucerons à la fin de chaque journée.
+            </div>
+            <div class="reponse tetx">
+                On créera une fonction <code>init_pop</code> qui nous servira à initialiser la population pour les 2 premières questions.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def init_pop():
+    a = Coccinelle("femelle", 10, 2)
+    b = Coccinelle("femelle", 10, 2)
+    c = Coccinelle("male", 10, 2)
+    return [a, b, c]
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                La fonction demandée peut être :
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def test_evolution():
+    pop = init_pop()
+    puc = 200
+    for k in range(1, 6):
+        pop, puc = evolution(pop, puc)
+        print("Jour ", k," : \n Coccinelles : ", len(pop), " - Pucerons : ", puc, "\n")
+                </code></pre>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire une fonction <code>simulation_simple(population, nb_proies)</code> qui automatise ce processus sur une durée maximale de 30 jours.
+                <br>
+                Cette fonction doit s’interrompre prématurément si la population de coccinelles ou de pucerons tombe à zéro. Elle doit renvoyer un triplet (tuple) contenant : le nombre final de coccinelles, le nombre final de pucerons, et le nombre de jours effectivement simulés. Tester cette fonction avec la même population initiale que la question précédente face à 1000
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def simulation_simple(population, nb_proies):
+    for k in range(1, 31):
+        population, nb_proies = evolution(population, nb_proies)
+        res = (len(population), nb_proies, k)
+        if len(population) == 0:
+            print("Plus de coccinelles !") # Facultatif mais pas inutile
+            return res
+        elif nb_proies == 0:
+            print("Plus de pucerons !") # Facultatif mais pas inutile
+            return res
+    return res
+                </code></pre>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                Écrire la documentation et les commentaires de la méthode <code>chasser</code>.
+            </div>
+            <div class="reponse text">
+                Voici l'une des réponses possibles :
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def chasser(self, nb_proies, nb_coccinelles):
+    '''
+        Méthode prenant en paramètre 1 coccinelle de type Coccinelle,
+        un nombre de proies nb_proies et un nombre de coccinelles nb_coccinelles
+        Renvoie le nombre de proies qui reste après que la coccinelle ait consommé x proies
+        Le nombre de consommation est calculé via des moyennes et du hasard en random
+    '''
+    # Si le nombre de coccinelles présentes pour chasser est nul, le nombre de poids reste tel quel
+    if nb_coccinelles == 0:
+        return nb_proies
+
+    # On calcule le nombre de proies qui sera attribué par coccinelle
+    proies_par_cocci = nb_proies / nb_coccinelles
+
+    # On affecte un nombre de proies consommées selon le nombre de proies par coccinelles
+    if proies_par_cocci > 20:
+        consomme = random.randint(12, 20)
+    elif proies_par_cocci > 10:
+        consomme = random.randint(8, 15)
+    else:
+        consomme = random.randint(3, 8)
+
+    # On affecte à consomme la valeur minimale entre une donnée hasardeuse (consomme elle-même)et le nombre de poids 
+    consomme = min(consomme, nb_proies)
+
+    # On gère le niveau de nutrition d'une coccinelle selon le nombre de proies consommées
+    if consomme >= 10:
+        self.niv_nutrition += 1
+    else:
+        self.niv_nutrition = max(0, self.niv_nutrition - 1)
+
+    # On renvoie le nombre de proies qui reste après que notre coccinelle en ait consommé x
+    return nb_proies - consomme
+                </pre></code>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                Modifier les méthodes <code>reproduction</code> et <code>a_survecu</code> de la classe <code>Coccinelle</code> afin d’y intégrer ces deux nouvelles règles biologiques (la maturité sexuelle et l’impact mortel du manque de nourriture).
+                <br>
+                Tester à nouveau la simulation globale pour observer les changements.
+            </div>
+            <div class="reponse text">
+                Pour rappel des modifications à effctuer :
+                <br>
+                • Les coccinelles ne peuvent se reproduire qu'à partir de 20 jours de vie ;<br>
+                • Si le niveau de nutrition d'une coccinelle est nul, elle a 1 chance sur 3 de survivre.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Version corrigée :
+def reproduction(self):
+    """
+    Une femelle avec un niveau de nutrition >= 2 engendre exactement
+    deux descendants : un mâle et une femelle.
+    """
+    descendants = []
+    # On ajoute self.age >= 20 puisque c'est à partir de 20 jours de vie
+    if self.sexe == "femelle" and self.niv_nutrition >= 2 and self.age >= 20:
+        descendants.append(Coccinelle("male", 0, 0))
+        descendants.append(Coccinelle("femelle", 0, 0))
+        self.niv_nutrition = 0
+
+    return descendants
+                </pre></code>
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Version corrigée :
+def a_survecu(self):
+        """
+        Met à jour l'âge de la coccinelle et indique si elle est encore en vie.
+        """
+        # Si niv_nutrition est nulle, et que le hasard donne 3 (ici considérés comme mortel), on indique False
+        if self.niv_nutrition == 0:
+            if random.randint(1, 3) == 3:
+                return False
+        
+        self.age = self.age + 1
+        return self.age < self.esperance_de_vie
+                </pre></code>
+            </div>
+        </div>
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>
