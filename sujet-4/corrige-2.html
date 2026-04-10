@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez les sujets corrigés de NSI pour l'année 2026. Préparez-vous efficacement avec nos ressources complètes et détaillées.">
+    <meta name="keywords" content="sujets corrigés NSI 2026, préparation NSI, ressources NSI, exercices NSI, cours NSI, révisions NSI">
+    <title>Corrigé Sujet N°4 - 2</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet"/>
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-up-icon lucide-circle-chevron-up"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°4</h1>
+        <h2>- Croissance des Plantes -</h2>
+        <div class="link-pdf only-pdf">
+            <br><br>
+            <span>Le Dossier ZIP de l'épreuve pratique N°4 se situe à l'adresse suivante :</span>
+            <br>
+            <a href="https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f03f3f7bb27ef4e9d9ad" target="_blank">https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f03f3f7bb27ef4e9d9ad</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="link-pdf only-pdf">
+            <span>Ce corrigé est tiré du site suivant :</span>
+            <br>
+            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="link-pdf only-pdf">
+            <span>La version du fichier Python corrigé est accessible à l'adresse suivante :</span>
+            <br>
+            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/culture_corrige_warren.py" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/culture_corrige_warren.py</a>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="info-sujet only-pdf">
+            <ul>
+                <li>Ce sujet est le N°2 de la banque des sujets pratiques de NSI 2026;</li>
+                <li>Ce sujet (corrigé) comporte 4 questions ;</li>
+                <li>Chaque réponse à une question se trouve sur une page distincte.</li>
+            </ul>
+        </div>
+        <br class="only-pdf"><br class="only-pdf">
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez téléchargez les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download href="init/26_BCG_NSI_4.zip">Dossier (ZIP)</a>
+            <a download href="init/sujet.pdf">Sujet (PDF)</a>
+            <a download href="init/analyse.py">Fichier Python Initial</a>
+        </div>
+        <div class="ressources-annexes out-pdf">
+            <a download href="init/plantes.py">Plantes (Python)</a>
+            <a download href="init/mesures.py">Mesures (Python)</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a href="./corrige.html">Corrigé Clément (site)</a>
+            <a download href="corrige/corrige_warren.pdf">Corrigé (PDF)</a>
+            <a download href="corrige/culture_corrige_warren.py">Fichier Python Corrigé V1</a>
+        </div>
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire une fonction <code>croissance_moyenne(plantes)</code> qui prend en paramètre une liste d’instances de la classe <code>Plante</code> et renvoie la moyenne des durées de croissance de l’ensemble de ces plantes (en jours). Si la liste fournie est vide, la fonction doit renvoyer <code>None</code>.<br>
+                Écrire au moins deux tests pour valider le bon fonctionnement de cette fonction, dont une traitant le cas d’une liste vide.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def croissance_moyenne(plantes):
+    if plantes == []:
+        return None
+    total = 0
+    plante_t = len(plantes)
+    for plante in plantes:
+        total += plante.croissance
+    return total / plante_t
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">Pour les tests possibles :</div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def test_croissance_moyenne():
+    assert croissance_moyenne(plantes) == 79.0, "Echec Test 1, données plantes"
+    assert croissance_moyenne([]) == None, "Echec Test 2, liste vide"
+                </code></pre>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire une fonction dictionnaire_mesure(plantes, mesures) qui prend en paramètre la liste des plantes et la liste des mesures. Elle doit renvoyer un dictionnaire où chaque clé est le nom d’une plante (présente dans la liste plantes), et chaque valeur associée est la liste des mesures concernant cette plante spécifique.<br>
+                Si une plante de la liste ne possède aucune mesure associée, la liste correspondante dans le dictionnaire devra être vide. Concevoir une série de tests pertinente pour vérifier le bon comportement de cette fonction.<br>
+                Exemple de retour :<br>
+                <pre>
+{
+    "plante1": [
+        {
+            "plante": "plante1",
+            "jour": 1,
+            "hauteur": 100,
+            "temperature": 20,
+            "humidite": 100,
+        },
+        {
+            "plante": "plante1",
+            "jour": 2,
+            "hauteur": 101,
+            "temperature": 20,
+            "humidite": 100,
+        },
+    ],
+    "plante2": [
+        {
+            "plante": "plante2",
+            "jour": 1,
+            "hauteur": 10,
+            "temperature": 20,
+            "humidite": 20,
+        }
+    ],
+}
+            </pre>
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def dictionnaire_mesure(plantes, mesures):
+    dic1 = {}
+    for plante in plantes:
+        for mesure in mesures:
+            if mesure['plante'] == plante.nom:
+                if plante.nom in dic1:
+                    dic1[plante.nom].append(mesure)
+                else:
+                    dic1[plante.nom] = [mesure]
+            else:
+                if not plante.nom in dic1:
+                    dict1[plante.nom] = []
+    return dic1
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                Afin de réaliser un test pertinent pour cette fonction, on utilisera un jeu de donné modifié et biaisé (d'autres tests sont tout de même valables), à savoir :
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+def test_dictionnaire_mesure():
+    from plantes import Plante
+    plantes_liste = [
+        Plante("Basilic", "Ocimum basilicum", 60, 40, "plein soleil"),
+        Plante("Tomate", "Solanum lycopersicum", 80, 100, "plein soleil"),
+        Plante("Iris", "Iris", 80, 50, "plein soleil")
+    ]
+    mesures = [
+        {'jour': 1, 'plante': 'Basilic', 'hauteur': 0.85, 'temperature': 29.3, 'humidite': 50.89},
+        {'jour': 1, 'plante': 'Tomate', 'hauteur': 1.27, 'temperature': 21.51, 'humidite': 47.19}
+    ]
+    assert dictionnaire_mesure(plantes_liste, mesures) == {"Basilic": [{"plante": "Basilic","jour": 1,"hauteur": 0.85,"temperature": 29.3,"humidite": 50.89,}],"Tomate": [{"plante": "Tomate","jour": 1,"hauteur": 1.27,"temperature": 21.51,"humidite": 47.19,}],"Iris": []}
+                </pre></code>
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                Exécuter le test de la fonction <code>test_purger</code> et analyser son code pour identifier la source de cette erreur logique.
+            </div>
+            <div class="reponse text">
+                On exécute dans la console :
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">
+test_purger()
+>>  Résultat après la purge :
+    Jour 2 : 19.0°C
+    Jour 3 : 22.0°C
+    Jour 5 : 29.0°C
+                </pre></code>
+            </div>
+            <br>
+            <div class="reponse text">
+                On remarque que l'erreur provient du .remove() qui est utilisé afin de supprimer une mesure. Le seul problème est que celui-ci modifie la liste et donc, son indexation, ce qui fait que les indices suivants ne correspondent plus à la même mesure. Le résultat est donc faussé.
+            </div>
+        </div>
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                Proposer une version corrigée de la fonction répondant parfaitement à l’objectif.
+            </div>
+            <div class="reponse code">
+                <pre><code class="language-python">
+# Fonction corrigée :
+def purger_mesures_extremes(liste_mesures):
+    """
+    Supprime de la liste toutes les mesures dont la température 
+    n'est pas comprise entre 20 et 25°C inclus.
+    """
+    copie = liste_mesures.copy()
+    for mesure in copie:
+        if 20 > mesure['temperature'] or mesure['temperature'] > 25:
+            liste_mesures.remove(mesure)
+    return liste_mesures
+                </pre></code>
+            </div>
+        </div>
+        <div class="legal">© 2026 - Warren Lipiec</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>
