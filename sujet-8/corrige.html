@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Découvrez les sujets corrigés de NSI pour l'année 2026. Préparez-vous efficacement avec nos ressources complètes et détaillées.">
     <meta name="keywords" content="sujets corrigés NSI 2026, préparation NSI, ressources NSI, exercices NSI, cours NSI, révisions NSI">
-    <title>Corrigé Sujet N°7</title>
+    <title>Corrigé Sujet N°8</title>
     <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
     <link href="../css/site.css" rel="stylesheet"/>
     <link href="../css/corrige.css" rel="stylesheet"/>
@@ -18,12 +18,12 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-up-icon lucide-circle-chevron-up"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
         </button>
         <br><br>
-        <h1>Corrigé Sujet N°7</h1>
-        <h2>- Coccinelles & Pucerons -</h2>
+        <h1>Corrigé Sujet N°8</h1>
+        <h2>- Flottants & Erreurs -</h2>
         <div class="link-pdf only-pdf">
-            <span>Le Dossier ZIP de l'épreuve pratique N°7 se situe à l'adresse suivante :</span>
+            <span>Le Dossier ZIP de l'épreuve pratique N°8 se situe à l'adresse suivante :</span>
             <br>
-            <a href="https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f0a48a3f1b2f2dd065ca" target="_blank">https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f0a48a3f1b2f2dd065ca</a>
+            <a href="https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f0bdcb85140736350717" target="_blank">https://sujets.examens-concours.gouv.fr/delos/api/file/public/69c4f0bdcb85140736350717</a>
         </div>
         <br class="only-pdf"><br class="only-pdf">
         <div class="link-pdf only-pdf">
@@ -35,12 +35,12 @@
         <div class="link-pdf only-pdf">
             <span>La version du fichier Python corrigé est accessible à l'adresse suivante :</span>
             <br>
-            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/coccinnelles_corrige.py" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/coccinnelles_corrige.py</a>
+            <a href="https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/addition_BCD_corrige.py" target="_blank">https://clem2429.github.io/Correction-Sujets-NSI-2026/corrige/addition_BCD_corrige.py</a>
         </div>
         <br class="only-pdf"><br class="only-pdf">
         <div class="info-sujet only-pdf">
             <ul>
-                <li>Ce sujet est le N°7 de la banque des sujets pratiques de NSI 2026;</li>
+                <li>Ce sujet est le N°8 de la banque des sujets pratiques de NSI 2026;</li>
                 <li>Ce sujet (corrigé) comporte 4 questions ;</li>
                 <li>Chaque réponse à une question se trouve sur une page distincte.</li>
             </ul>
@@ -50,60 +50,49 @@
             Vous pouvez téléchargez les éléments suivants en cliquant sur les boutons associés :
         </div>
         <div class="ressources out-pdf">
-            <a download href="init/26_BCG_NSI_7.zip">Dossier (ZIP)</a>
+            <a download href="init/26_BCG_NSI_8.zip">Dossier (ZIP)</a>
             <a download href="init/sujet.pdf">Sujet (PDF)</a>
-            <a download href="init/coccinnelles.py">Fichier Python Initial</a>
+            <a download href="init/addition_BCD.py">Fichier Python Initial</a>
         </div>
         <div class="ressources-corrigees out-pdf">
             <a download href="corrige/corrige.pdf">Corrigé V1 (PDF)</a>
-            <a download href="corrige/coccinnelles_corrige.py">Fichier Python Corrigé V1</a>
+            <a download href="corrige/addition_BCD_corrige.py">Fichier Python Corrigé V1</a>
             <!-- <a download href="corrige/coccinnelles_corrige_warren.py">Fichier Python Corrigé V2</a> -->
         </div>
         <div class="question">
             <h3>Question 1</h3>
             <div class="consigne">
-                On souhaite observer le comportement du modèle sur une courte période. 
+                La chaîne de restauration “RESTO NSI” comprend 1 000 restaurants qui délivrent chacun 500 menus par jour. Un menu est composé d’une entrée à 2.27 €, d’un plat à 5.19 € et d’un dessert à 1.81 €.
                 <br>
-                Créer une population initiale contenant 3 coccinelles (2 femelles et 1 mâle), toutes âgées de 10 jours et ayant un niveau de nutrition de 2. Le nombre initial de pucerons est fixé à 200. <br>
-                Écrire une séquence d’instructions (utilisant une boucle) permettant de simuler l’évolution de ce petit écosystème sur 5 jours consécutifs, en appelant la fonction evolution.
+                Écrire, dans le fichier <code>addition_BCD.py</code>, une fonction <code>calcul_recettes()</code> qui additionne le prix de chaque menu vendu dans la journée en utilisant une boucle.
                 <br>
-                Afficher le nombre de coccinelles et de pucerons à la fin de chaque journée.
+                Afficher le résultat de cette fonction. Sachant que la valeur théorique exacte est de 4 635 000 €, justifier le comportement observé.
             </div>
-            <div class="reponse text">
-                On créera une fonction <code>init_pop</code> qui nous servira à initialiser la population pour les 2 premières questions.
-            </div>
-            <br>
             <div class="reponse code">
                 <pre><code class="language-python">
-def init_pop():
-    a = Coccinelle("femelle", 10, 2)
-    b = Coccinelle("femelle", 10, 2)
-    c = Coccinelle("male", 10, 2)
-    return [a, b, c]
+def calcul_recettes():
+    s = 0
+    for k in range(1000):
+        for i in range(500):
+            s += 2.27 + 5.19 + 1.81
+    return s
+
+# Appel de la fonction dans la console :
+calcul_recettes()
                 </code></pre>
             </div>
             <br>
             <div class="reponse text">
-                La fonction demandée peut être :
-            </div>
-            <br>
-            <div class="reponse code">
-                <pre><code class="language-python">
-def test_evolution():
-    pop = init_pop()
-    puc = 200
-    for k in range(1, 6):
-        pop, puc = evolution(pop, puc)
-        print("Jour ", k," : \n Coccinelles : ", len(pop), " - Pucerons : ", puc, "\n")
-                </code></pre>
+                La fonction renvoie <code>4634999.999986519</code>, cette réponse approximative et éronnée fait suite à la mauvaise de représentation des flottants du langage Python.
             </div>
         </div>
+        </div>
         <div class="question">
-            <h3>Question 2</h3>
+            <h3> Question 2</h3>
             <div class="consigne">
-                Écrire une fonction <code>simulation_simple(population, nb_proies)</code> qui automatise ce processus sur une durée maximale de 30 jours.
+                Écrire la fonction <code>convertir_BCD_vers_decimal(liste_quartets)</code> qui prend en paramètre une liste de chaînes de caractères représentant des quartets BCD, et renvoie lacvaleur décimale correspondante (de type <code>float</code>).
                 <br>
-                Cette fonction doit s’interrompre prématurément si la population de coccinelles ou de pucerons tombe à zéro. Elle doit renvoyer un triplet (tuple) contenant : le nombre final de coccinelles, le nombre final de pucerons, et le nombre de jours effectivement simulés. Tester cette fonction avec la même population initiale que la question précédente face à 1000
+                Ajouter une assertion pour vérifier que <code>convertir_BCD_vers_decimal(['0001', '0011', '0101', '0110'])</code> renvoie bien la valeur <code>13.56</code>.
             </div>
             <div class="reponse code">
                 <pre><code class="language-python">
