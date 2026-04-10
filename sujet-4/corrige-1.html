@@ -205,7 +205,7 @@ def purger_mesures_extremes(liste_mesures):
     """
     copie = liste_mesures.copy()
     for mesure in copie:
-        if 20 > mesure['temperature'] or mesure['temperature'] > 25:
+        if not (20 < mesure['temperature'] < 25):
             liste_mesures.remove(mesure)
     return liste_mesures
                 </pre></code>
