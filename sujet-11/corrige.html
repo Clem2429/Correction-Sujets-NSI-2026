@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrigé Sujet N°11</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°11</h1>
+        <h2>- Prédiction d'Habitat du Renard (k-NN) -</h2>
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez télécharger les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download href="init/sujet.pdf">Sujet (PDF)</a>
+            <a download href="init/prediction_habitat.py">Fichier Python Initial</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download href="corrige/prediction_habitat_corrige.py">Fichier Python Corrigé</a>
+        </div>
+
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire le code de la fonction <code>distance</code> qui prend en paramètres deux habitats sous forme de dictionnaires et renvoie la distance euclidienne entre ces deux habitats selon la formule donnée dans l'énoncé.
+            </div>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On calcule la somme des carrés des différences pour chacune des 5 caractéristiques, puis on applique la racine carrée.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">from math import sqrt
+
+def distance(habitat_1, habitat_2):
+    """Calcule la distance euclidienne entre deux habitats."""
+    d = (
+        (habitat_1['vegetation']         - habitat_2['vegetation'])         ** 2 +
+        (habitat_1['proximite_eau']      - habitat_2['proximite_eau'])      ** 2 +
+        (habitat_1['densite_urbaine']    - habitat_2['densite_urbaine'])    ** 2 +
+        (habitat_1['disponibilite_proies'] - habitat_2['disponibilite_proies']) ** 2 +
+        (habitat_1.get('presence_renard', 0) - habitat_2.get('presence_renard', 0)) ** 2
+    )
+    return sqrt(d)
+
+# Test rapide
+h1 = {'vegetation': 9, 'proximite_eau': 6, 'densite_urbaine': 0,
+       'disponibilite_proies': 4, 'presence_renard': 1}
+h2 = {'vegetation': 5, 'proximite_eau': 2, 'densite_urbaine': 4,
+       'disponibilite_proies': 6, 'presence_renard': 0}
+print(distance(h1, h2))   # Doit s'approcher de 7.211...
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction avancée :</strong> On peut écrire une version générique qui calcule la distance sur toutes les clés communes aux deux dictionnaires, pour ne pas dépendre d'une liste de clés codée en dur.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">from math import sqrt
+
+def distance(habitat_1, habitat_2):
+    """Version avancée : distance sur toutes les clés numériques communes."""
+    cles = set(habitat_1.keys()) & set(habitat_2.keys())
+    return sqrt(sum((habitat_1[c] - habitat_2[c]) ** 2 for c in cles))
+
+# On s'assure que les deux dictionnaires ont les mêmes clés
+h_test = {'vegetation': 9, 'proximite_eau': 6, 'densite_urbaine': 0,
+          'disponibilite_proies': 4, 'presence_renard': 1}
+nouveau = {'vegetation': 5, 'proximite_eau': 2, 'densite_urbaine': 4,
+           'disponibilite_proies': 6, 'presence_renard': 0}
+print(round(distance(h_test, nouveau), 12))   # >> 7.211102550927978
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire le code de la fonction <code>distance_d_un_habitat</code> qui prend en paramètres un habitat et une liste d'habitats, et renvoie une liste de tuples <code>(distance, habitat)</code>.
+            </div>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On parcourt chaque habitat de la liste, on calcule sa distance avec l'habitat fourni, et on construit la liste de tuples.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def distance_d_un_habitat(habitat, habitats):
+    """Retourne la liste de tuples (distance, habitat) pour chaque habitat de la liste."""
+    result = []
+    for h in habitats:
+        d = distance(habitat, h)
+        result.append((d, h))
+    return result
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction avancée :</strong> Une compréhension de liste rend l'écriture plus concise. On peut aussi ajouter un tri optionnel par distance pour faciliter l'exploitation du résultat.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def distance_d_un_habitat(habitat, habitats):
+    """Version avancée avec compréhension de liste."""
+    return [(distance(habitat, h), h) for h in habitats]
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                Tester la fonction <code>distance_d_un_habitat</code> avec l'habitat <code>nouveau</code> et <code>zones_connues</code>, en affichant les 3 premiers tuples de la liste. Les résultats attendus sont indiqués dans l'énoncé.
+            </div>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On appelle la fonction et on affiche les 3 premiers éléments de la liste retournée.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">nouveau = {
+    'vegetation': 5,
+    'proximite_eau': 2,
+    'densite_urbaine': 4,
+    'disponibilite_proies': 6
+}
+
+distances = distance_d_un_habitat(nouveau, zones_connues)
+for t in distances[:3]:
+    print(t)
+# >> (7.211102550927978, {'vegetation': 9, 'proximite_eau': 6, ...})
+# >> (8.660254037844387, {'vegetation': 10, 'proximite_eau': 5, ...})
+# >> (5.196152422706632, {'vegetation': 8, 'proximite_eau': 5, ...})
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Remarque :</strong> L'habitat <code>nouveau</code> ne possède pas la clé <code>presence_renard</code>. C'est normal : on cherche à prédire justement cette valeur. La distance est calculée sur les 4 caractéristiques communes. On utilise <code>.get('presence_renard', 0)</code> ou on s'assure que la fonction <code>distance</code> ignore les clés absentes (version avancée avec l'intersection des clés).
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                La fonction <code>presence_renard</code> contient une erreur de traitement des tuples. Corriger la fonction.
+            </div>
+            <div class="reponse text">
+                <strong>Identification du problème :</strong> Dans la boucle, la variable <code>distance</code> reçoit <code>habitat[0]</code> (le premier élément du tuple, qui est un <em>float</em>), et <code>caracteristiques</code> reçoit <code>habitat[1]</code> (le dictionnaire). Mais le test suivant utilise <code>distance['presence_renard']</code> comme si <code>distance</code> était un dictionnaire, alors que c'est un flottant. Il faut utiliser <code>caracteristiques['presence_renard']</code>.
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On remplace <code>distance['presence_renard']</code> par <code>caracteristiques['presence_renard']</code>.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def presence_renard(k, habitat, habitats):
+    """Vérifie si l'habitat donné a plus de k/2 voisins avec des renards."""
+    voisins = k_plus_proches(k, habitat, habitats)
+    n_renards = 0
+    for voisin in voisins:
+        distance_val = voisin[0]          # float : la distance euclidienne
+        caracteristiques = voisin[1]      # dict  : l'habitat voisin
+        if caracteristiques['presence_renard'] == 1:   # CORRECTION : caracteristiques, pas distance
+            n_renards += 1
+    return n_renards > k / 2
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction avancée :</strong> On peut utiliser le déballage de tuple directement dans la boucle <code>for</code> pour rendre le code plus lisible, et ajouter une vérification que k est positif.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def presence_renard(k, habitat, habitats):
+    """Version avancée avec déballage de tuple et vérification de k."""
+    if k <= 0:
+        raise ValueError("k doit être un entier strictement positif.")
+    voisins = k_plus_proches(k, habitat, habitats)
+    n_renards = sum(
+        1 for _, caract in voisins
+        if caract['presence_renard'] == 1
+    )
+    return n_renards > k / 2
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 5</h3>
+            <div class="consigne">
+                L'habitat <code>nouveau</code> est-il susceptible ou non de contenir une population de renards ? Expliquer en utilisant la fonction <code>presence_renard</code> avec plusieurs valeurs pour k.
+            </div>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On teste avec différentes valeurs de k et on observe la majorité des résultats.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">nouveau = {
+    'vegetation': 5,
+    'proximite_eau': 2,
+    'densite_urbaine': 4,
+    'disponibilite_proies': 6
+}
+
+for k in [1, 3, 5, 7, 9]:
+    resultat = presence_renard(k, nouveau, zones_connues)
+    print(f"k={k} : présence du renard prédite = {resultat}")
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Interprétation avancée :</strong> Si la majorité des valeurs de k donne <code>False</code>, l'habitat <code>nouveau</code> est probablement <strong>non favorable</strong> à la présence du renard. Le choix de k influence le résultat : un k trop petit peut être sensible aux anomalies locales (bruit), un k trop grand lisse les décisions. En pratique, on choisit k impair pour éviter les ex-aequo et on teste plusieurs valeurs pour évaluer la robustesse de la prédiction.
+                <br><br>
+                L'habitat <code>nouveau</code> présente une végétation modérée (5/10), une faible proximité de l'eau (2/10) et une densité urbaine moyenne (4/10). Ces caractéristiques sont <em>défavorables</em> aux renards (qui préfèrent les zones à forte végétation et proche de l'eau). La prédiction k-NN devrait donc pencher vers l'absence de renard.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python"># Analyse détaillée pour k=5
+voisins = k_plus_proches(5, nouveau, zones_connues)
+print("5 voisins les plus proches :")
+for dist, caract in voisins:
+    present = "Renard présent" if caract['presence_renard'] == 1 else "Renard absent"
+    print(f"  distance={dist:.2f} | {present}")
+
+print("\nPrédiction finale (k=5) :", presence_renard(5, nouveau, zones_connues))
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrigé Sujet N°10</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°10</h1>
+        <h2>- Analyse de Consommation d'Eau -</h2>
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez télécharger les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download href="init/sujet.pdf">Sujet (PDF)</a>
+            <a download href="init/analyse_eau.py">Fichier Python Initial</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download href="corrige/analyse_eau_corrige.py">Fichier Python Corrigé</a>
+        </div>
+
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire une fonction <code>total_conso</code> qui prend en paramètres une liste de mesures et un jour (chaîne de caractères), et renvoie la consommation totale d'eau (chaude + froide) pour ce jour. La fonction renvoie <code>None</code> si aucune mesure n'existe pour ce jour.
+            </div>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On filtre les mesures du jour concerné, on additionne les consommations chaude et froide. On utilise un booléen pour savoir si au moins une mesure a été trouvée.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def total_conso(donnees, jour):
+    """Retourne la consommation totale pour un jour, ou None si aucune mesure."""
+    total = 0
+    trouve = False
+    for mesure in donnees:
+        if mesure['jour'] == jour:
+            total += mesure['chaude'] + mesure['froide']
+            trouve = True
+    if not trouve:
+        return None
+    return total
+
+# Tests
+print(total_conso(donnees, "2025-02-04"))   # >> 33
+print(total_conso(donnees, "2025-12-25"))   # >> None
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction avancée :</strong> On construit d'abord la liste des consommations filtrées, puis on retourne <code>None</code> si vide, ou la somme via <code>sum()</code>. C'est plus concis et sépare clairement le filtrage du calcul.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def total_conso(donnees, jour):
+    """Version avancée avec compréhension de liste."""
+    consos = [m['chaude'] + m['froide'] for m in donnees if m['jour'] == jour]
+    return sum(consos) if consos else None
+
+assert total_conso(donnees, "2025-02-04") == 33
+assert total_conso(donnees, "2025-12-25") is None
+assert total_conso(donnees, "2025-02-05") == 6
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire une fonction <code>fuite_possible</code> qui renvoie <code>True</code> si une fuite est possible (au moins 3 mesures consécutives entre 00:00 et 05:00 avec consommation totale non nulle), <code>False</code> sinon.
+            </div>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On parcourt les mesures du jour concerné entre 00:00 et 05:00, en maintenant un compteur de mesures non nulles consécutives. Dès qu'une mesure est nulle, on remet le compteur à zéro.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def fuite_possible(donnees, jour):
+    """Retourne True si 3 mesures consécutives non nulles entre 00:00 et 05:00."""
+    consecutives = 0
+    heures_nuit = {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00"}
+    for mesure in donnees:
+        if mesure['jour'] == jour and mesure['heure'] in heures_nuit:
+            conso = mesure['chaude'] + mesure['froide']
+            if conso > 0:
+                consecutives += 1
+                if consecutives >= 3:
+                    return True
+            else:
+                consecutives = 0   # remise à zéro si une mesure est nulle
+    return False
+
+# Tests
+print(fuite_possible(donnees, "2025-02-04"))  # >> False
+print(fuite_possible(donnees, "2025-02-05"))  # >> True (01:00, 02:00, 03:00 non nuls)
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction avancée :</strong> On filtre d'abord les mesures pertinentes, puis on cherche 3 valeurs consécutives non nulles dans la liste résultante. On peut factoriser la détection de séquence dans une fonction générique.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def fuite_possible(donnees, jour):
+    """Version avancée : filtrage puis recherche de séquence."""
+    heures_nuit = {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00"}
+    mesures_nuit = [
+        m['chaude'] + m['froide']
+        for m in donnees
+        if m['jour'] == jour and m['heure'] in heures_nuit
+    ]
+    # Recherche de 3 valeurs non nulles consécutives
+    count = 0
+    for v in mesures_nuit:
+        if v > 0:
+            count += 1
+            if count >= 3:
+                return True
+        else:
+            count = 0
+    return False
+
+assert fuite_possible(donnees, "2025-02-04") == False
+assert fuite_possible(donnees, "2025-02-05") == True
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                La fonction <code>lissage_conso</code> contient une erreur. Expliquer pourquoi la fonction produit un résultat incorrect avec la liste <code>[10, 20, 30, 40, 50]</code>, et proposer une correction.
+            </div>
+            <div class="reponse text">
+                <strong>Identification du problème :</strong> Pour les éléments intermédiaires, la fonction calcule la moyenne sur <em>3</em> valeurs mais divise par <code>2</code> au lieu de <code>3</code>. Par exemple, pour l'indice 1 (valeur 20) : (10 + 20 + 30) / 2 = 30 au lieu de (10 + 20 + 30) / 3 ≈ 20.
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On remplace le diviseur <code>2</code> par <code>3</code> dans le cas intermédiaire.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def lissage_conso(valeurs):
+    """Calcule une moyenne glissante corrigée sur les valeurs."""
+    lisse = []
+    for i in range(len(valeurs)):
+        if i == 0:
+            m = (valeurs[i] + valeurs[i + 1]) / 2
+        elif i == len(valeurs) - 1:
+            m = (valeurs[i - 1] + valeurs[i]) / 2
+        else:
+            m = (valeurs[i - 1] + valeurs[i] + valeurs[i + 1]) / 3   # CORRECTION : / 3
+        lisse.append(m)
+    return lisse
+
+# Test
+test = [10, 20, 30, 40, 50]
+print(lissage_conso(test))
+# >> [15.0, 20.0, 30.0, 40.0, 45.0]
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction avancée :</strong> On peut tester la correction rigoureusement et rendre la taille de la fenêtre de lissage configurable pour plus de flexibilité.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def lissage_conso(valeurs):
+    """Version corrigée avec assertions de test intégrées."""
+    lisse = []
+    for i in range(len(valeurs)):
+        if i == 0:
+            m = (valeurs[0] + valeurs[1]) / 2
+        elif i == len(valeurs) - 1:
+            m = (valeurs[-2] + valeurs[-1]) / 2
+        else:
+            m = (valeurs[i - 1] + valeurs[i] + valeurs[i + 1]) / 3
+        lisse.append(m)
+    return lisse
+
+def test_lissage():
+    # Test basique
+    assert lissage_conso([10, 20, 30, 40, 50]) == [15.0, 20.0, 30.0, 40.0, 45.0]
+    # Vérifier que la liste retournée a la même taille
+    data = [5, 10, 15, 20]
+    assert len(lissage_conso(data)) == len(data)
+    # Liste homogène : lissage ne change rien
+    assert lissage_conso([5, 5, 5, 5]) == [5.0, 5.0, 5.0, 5.0]
+    print("Tous les tests lissage_conso sont passés.")
+
+test_lissage()
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                La fonction <code>lissage_conso</code> gère le cas d'une liste à deux valeurs. Identifier un autre cas limite non pris en compte et proposer une solution.
+            </div>
+            <div class="reponse text">
+                <strong>Cas limite non géré : la liste vide.</strong> Si <code>valeurs = []</code>, la boucle <code>for i in range(len(valeurs))</code> ne s'exécute pas, donc la fonction retourne <code>[]</code> sans erreur — mais si l'on accède à <code>valeurs[i + 1]</code> ou <code>valeurs[i - 1]</code> pour une liste d'un seul élément, on obtient une <code>IndexError</code>. Le <strong>vrai cas limite non géré est la liste à un seul élément</strong> : l'indice 0 déclenche <code>valeurs[1]</code> qui n'existe pas.
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On ajoute une garde en début de fonction pour traiter le cas de la liste vide et le cas de la liste à un seul élément.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def lissage_conso(valeurs):
+    """Lissage corrigé avec gestion des cas limites."""
+    if len(valeurs) == 0:
+        return []
+    if len(valeurs) == 1:
+        return [float(valeurs[0])]  # aucun voisin : on retourne la valeur elle-même
+
+    lisse = []
+    for i in range(len(valeurs)):
+        if i == 0:
+            m = (valeurs[0] + valeurs[1]) / 2
+        elif i == len(valeurs) - 1:
+            m = (valeurs[-2] + valeurs[-1]) / 2
+        else:
+            m = (valeurs[i - 1] + valeurs[i] + valeurs[i + 1]) / 3
+        lisse.append(m)
+    return lisse
+
+# Tests des cas limites
+assert lissage_conso([]) == []
+assert lissage_conso([42]) == [42.0]
+assert lissage_conso([10, 20]) == [15.0, 15.0]
+print("Cas limites gérés correctement.")
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Explication avancée :</strong> En programmation défensive, on doit toujours tester les <em>cas aux bords</em> : liste vide, liste unitaire, liste de deux éléments, et liste très longue. Ces cas sont souvent sources de bugs. Ici, la liste unitaire provoquait une <code>IndexError</code> car l'indice 0 vérifie <code>i == 0</code> (branche premier élément) et tente d'accéder à <code>valeurs[1]</code> qui n'existe pas.
+            </div>
+        </div>
+
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>
