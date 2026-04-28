@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrigé Sujet N°14</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°14</h1>
+        <h2>- Simulation d'Évacuation d'une Pièce -</h2>
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez télécharger les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download href="init/sujet.pdf">Sujet (PDF)</a>
+            <a download href="init/simulation_evacuation.py">Fichier Python Initial</a>
+            <a download href="init/IHM_evacuation.py">IHM (interface graphique)</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download href="corrige/simulation_evacuation_corrige.py">Fichier Python Corrigé</a>
+        </div>
+
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire le corps de la méthode <code>nb_occupants_restants</code> de la classe <code>Piece</code>. Cette méthode doit renvoyer le nombre total d'occupants encore présents dans la pièce.
+            </div>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> La grille est une liste de listes (matrice 2D). On parcourt chaque ligne puis chaque case et on accumule les valeurs dans un compteur.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def nb_occupants_restants(self) -> int:
+    """Renvoie le nombre total d'occupants restants dans la pièce."""
+    total = 0
+    for ligne in self.grille:
+        for case in ligne:
+            total += case
+    return total
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction avancée :</strong> On peut condenser les deux boucles imbriquées en une seule expression avec <code>sum()</code> et une compréhension de liste à double itération.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def nb_occupants_restants(self) -> int:
+    """Version concise avec sum et compréhension de liste."""
+    return sum(case for ligne in self.grille for case in ligne)
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire le corps de la fonction <code>evacuation</code> qui simule l'évacuation complète de la pièce et renvoie le nombre de tours nécessaires. Si le paramètre <code>silencieux</code> vaut <code>False</code>, l'état de la pièce doit être affiché à chaque tour.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> On boucle tant qu'il reste des occupants dans la pièce. À chaque itération on appelle <code>alerter()</code> (qui simule un tour), on incrémente le compteur, et on affiche la pièce si demandé. On ajoute une garde contre les blocages infinis : si <code>alerter()</code> retourne <code>False</code> (aucun déplacement possible) alors qu'il reste des occupants, on interrompt la boucle.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def evacuation(p: Piece, silencieux: bool = True) -> int:
+    """Simule l'évacuation complète et renvoie le nombre de tours nécessaires."""
+    nb_tours = 0
+    while p.nb_occupants_restants() > 0:
+        a_bouge = p.alerter(silencieux)
+        nb_tours += 1
+        if not silencieux:
+            print(p)
+        if not a_bouge:
+            # Sécurité : plus aucun mouvement possible, on arrête
+            break
+    return nb_tours
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Remarque :</strong> Le paramètre <code>silencieux=True</code> est passé à <code>alerter()</code> pour que les messages de déplacement internes soient aussi masqués ou affichés de façon cohérente. Le <code>print(p)</code> affiche l'état de la grille après chaque tour grâce à la méthode <code>__str__</code> déjà définie.
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                Modifier la méthode <code>ajouter_sortie</code> afin qu'il soit aussi possible d'ajouter une sortie dans les directions <code>"S"</code> (sud) et <code>"E"</code> (est), qui ne sont pas encore prises en compte.
+            </div>
+            <div class="reponse text">
+                <strong>Analyse du code existant :</strong> La direction <code>"N"</code> place une sortie sur la ligne 0 (bord nord) à la colonne <code>position</code> → tuple <code>(0, position)</code>. La direction <code>"O"</code> place une sortie à la colonne 0 (bord ouest) sur la ligne <code>position</code> → tuple <code>(position, 0)</code>. Par symétrie : <code>"S"</code> doit placer la sortie sur la dernière ligne (<code>i_max</code>) → tuple <code>(i_max, position)</code>. <code>"E"</code> doit placer la sortie sur la dernière colonne (<code>j_max</code>) → tuple <code>(position, j_max)</code>.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def ajouter_sortie(self, direction: str, position: int):
+    """Permet d'ajouter des sorties dans les 4 directions (N, S, E, O)."""
+    if direction == "N":
+        self.sorties.append((0, position))
+    elif direction == "O":
+        self.sorties.append((position, 0))
+    elif direction == "S":
+        # AJOUT : bord sud = dernière ligne (i_max), colonne = position
+        self.sorties.append((self.i_max, position))
+    elif direction == "E":
+        # AJOUT : bord est = dernière colonne (j_max), ligne = position
+        self.sorties.append((position, self.j_max))
+
+# Test avec test_ajouter_sortie()
+# Pour une Piece(5, 7) : i_max=4, j_max=6
+# ajouter_sortie("S", n1) → (4, n1)
+# ajouter_sortie("E", n2) → (n2, 6)
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                Identifier l'erreur logique et la variable non définie dans le code de la méthode <code>choix_sortie</code>, puis effectuer les corrections nécessaires afin qu'elle renvoie la sortie la plus proche (distance de Manhattan).
+            </div>
+            <div class="reponse text">
+                <strong>Identification des deux bugs :</strong>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Bug 1 — Variable non définie :</strong> Dans la boucle, la ligne <code>distance = d2</code> fait référence à <code>d2</code> qui n'est jamais calculé. Il faut calculer la distance de Manhattan de l'autre sortie candidate avant de la comparer : <code>d2 = distance_de_manhattan(autre_sortie)</code>.
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Bug 2 — Erreur logique dans la condition :</strong> La condition <code>if k &lt; 0</code> est toujours fausse (k commence à 1 et croît). Le bloc de mise à jour du meilleur choix n'est donc jamais exécuté, et la méthode retourne systématiquement la première sortie de la liste. La condition correcte est <code>if d2 &lt; distance</code> (on remplace par la sortie candidate si elle est plus proche). Il faut aussi renommer la variable <code>distance</code> en <code>distance_min</code> pour éviter un conflit avec la fonction locale du même nom.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def choix_sortie(self, i: int, j: int) -> tuple:
+    """Renvoie la sortie la plus proche selon la distance de Manhattan."""
+    def distance_de_manhattan(destination):
+        return abs(i - destination[0]) + abs(j - destination[1])
+
+    assert len(self.sorties) > 0, "Aucune sortie"
+    choix = self.sorties[0]
+    distance_min = distance_de_manhattan(choix)  # CORRECTION : renommé distance_min
+    for k in range(1, len(self.sorties)):
+        autre_sortie = self.sorties[k]
+        d2 = distance_de_manhattan(autre_sortie)  # CORRECTION : d2 maintenant calculé
+        if d2 < distance_min:                     # CORRECTION : condition était "k < 0"
+            choix = autre_sortie
+            distance_min = d2
+    return choix
+
+# Tests
+# choix_sortie(0, 3) avec sorties [(0,5),(4,1),(3,6),(1,0)]
+# distances : |0-0|+|3-5|=2, |0-4|+|3-1|=6, |0-3|+|3-6|=6, |0-1|+|3-0|=4
+# → sortie la plus proche : (0, 5) ✓
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Résumé des corrections :</strong> Deux erreurs coexistaient dans <code>choix_sortie</code> : une variable <code>d2</code> utilisée sans être définie (qui aurait levé une <code>NameError</code> si la condition avait été vraie), et une condition <code>k &lt; 0</code> logiquement impossible qui neutralisait tout le mécanisme de comparaison. La méthode se contentait donc de toujours retourner <code>self.sorties[0]</code>, ignorant toutes les autres sorties.
+            </div>
+        </div>
+
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>

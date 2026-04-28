@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrigé Sujet N°18</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°18</h1>
+        <h2>- Analyse des Températures Océaniques en Polynésie Française -</h2>
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez télécharger les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download href="init/sujet.pdf">Sujet (PDF)</a>
+            <a download href="init/analyse_temperatures_polynesie.py">Fichier Python Initial</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download href="corrige/analyse_temperatures_polynesie_corrige.py">Fichier Python Corrigé</a>
+        </div>
+
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire la fonction <code>temperature_moyenne(zone, donnees)</code> qui renvoie la température moyenne pour la zone donnée, ou <code>None</code> si aucun relevé n'existe pour cette zone.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> On filtre les relevés correspondant à la zone, puis on calcule la moyenne si la liste n'est pas vide, sinon on retourne <code>None</code>.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def temperature_moyenne(zone, donnees):
+    """Renvoie la température moyenne de la zone, ou None si absente."""
+    releves = [r['temperature'] for r in donnees if r['zone'] == zone]
+    if not releves:
+        return None
+    return sum(releves) / len(releves)
+
+# Tests
+# 'Societe' : (27.0 + 26.5 + 27.5 + 28.0 + 28.5 + 29.0) / 6 = 27.75
+assert temperature_moyenne('Societe', donnees_test) == 27.75
+assert temperature_moyenne('Inconnu', donnees_test) is None
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire la fonction <code>detecter_anomalies(zone, seuil, donnees)</code> qui renvoie la liste des dates où la température s'écarte de plus de <code>seuil</code> degrés (en valeur absolue) de la moyenne de la zone.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> On réutilise <code>temperature_moyenne</code> pour obtenir la référence, puis on filtre les relevés dont l'écart absolu dépasse le seuil. Si la zone n'existe pas, <code>temperature_moyenne</code> renvoie <code>None</code> et on retourne une liste vide.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def detecter_anomalies(zone, seuil, donnees):
+    """Renvoie les dates des relevés anormaux (écart > seuil par rapport à la moyenne)."""
+    moy = temperature_moyenne(zone, donnees)
+    if moy is None:
+        return []
+    return [
+        r['date']
+        for r in donnees
+        if r['zone'] == zone and abs(r['temperature'] - moy) > seuil
+    ]
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                Compléter les trois fonctions de test pour <code>evolution_par_decennie</code> afin d'identifier le bug présent dans le code.
+            </div>
+            <div class="reponse text">
+                <strong>Correction des tests :</strong> Les tests doivent vérifier que les clés du dictionnaire retourné sont bien des décennies complètes (2010, 2020) et non des entiers tronqués (201, 202), ce qui révèle le bug du calcul de décennie.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def test_zone_inexistante():
+    """Zone inexistante → dictionnaire vide."""
+    resultat = evolution_par_decennie('Australes', donnees_test)
+    assert resultat == {}
+    print("test_zone_inexistante : OK")
+
+def test_une_seule_decennie():
+    """Marquises : données à partir de 2020 uniquement → une seule clé 2020."""
+    resultat = evolution_par_decennie('Marquises', donnees_test)
+    assert len(resultat) == 1
+    assert 2020 in resultat          # révèle le bug si la clé est 202 au lieu de 2020
+    assert resultat[2020] == 26.0    # (25.5 + 26.0 + 26.5) / 3
+    print("test_une_seule_decennie : OK")
+
+def test_plusieurs_decennies():
+    """Société : 2010 et 2020 → deux clés distinctes."""
+    resultat = evolution_par_decennie('Societe', donnees_test)
+    assert 2010 in resultat and 2020 in resultat
+    assert resultat[2010] == 27.0    # (27.0 + 26.5 + 27.5) / 3
+    assert resultat[2020] == 28.5    # (28.0 + 28.5 + 29.0) / 3
+    print("test_plusieurs_decennies : OK")
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Bug détecté :</strong> Le calcul <code>decennie = (annee // 10)</code> produit 201 pour les années 2010–2019 et 202 pour les années 2020–2029, au lieu de 2010 et 2020. Les tests <code>assert 2020 in resultat</code> échouent, ce qui met immédiatement le bug en évidence.
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                Après avoir identifié le bug grâce aux tests, corriger la fonction <code>evolution_par_decennie</code>.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> Il suffit de multiplier le résultat de la division entière par 10 pour retrouver la décennie correcte : <code>(annee // 10) * 10</code>. Ainsi 2013 → 201 → 2010, et 2024 → 202 → 2020.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def evolution_par_decennie(zone, donnees):
+    releves_zone = [r for r in donnees if r['zone'] == zone]
+    if not releves_zone:
+        return {}
+
+    temperatures_par_decennie = {}
+    for releve in releves_zone:
+        annee = int(releve['date'].split('-')[0])
+        decennie = (annee // 10) * 10   # CORRECTION : * 10 pour obtenir 2010, 2020...
+
+        if decennie not in temperatures_par_decennie:
+            temperatures_par_decennie[decennie] = []
+        temperatures_par_decennie[decennie].append(releve['temperature'])
+
+    moyennes = {}
+    for decennie, temperatures in temperatures_par_decennie.items():
+        moyennes[decennie] = round(sum(temperatures) / len(temperatures), 2)
+    return moyennes
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>

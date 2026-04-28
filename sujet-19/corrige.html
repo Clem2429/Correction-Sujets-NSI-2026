@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrigé Sujet N°19</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°19</h1>
+        <h2>- Gestion des Réserves d'Eau en Polynésie -</h2>
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez télécharger les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download href="init/sujet.pdf">Sujet (PDF)</a>
+            <a download href="init/gestion_eau.py">Fichier Python Initial</a>
+            <a download href="init/donnees.py">Données (donnees.py)</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download href="corrige/gestion_eau_corrige.py">Fichier Python Corrigé</a>
+        </div>
+
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire la fonction <code>est_en_penurie(liste_reservoirs, nom)</code> qui renvoie un booléen indiquant si le réservoir nommé est en pénurie (taux de remplissage strictement inférieur à 20 %).
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> On cherche le réservoir par son nom dans la liste, puis on calcule son taux de remplissage. Le taux vaut <code>volume / capacite</code> ; si ce rapport est strictement inférieur à 0,20 (soit 20 %), le réservoir est en pénurie.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def est_en_penurie(liste_reservoirs, nom):
+    """Renvoie True si le réservoir nommé a un taux de remplissage < 20 %."""
+    for r in liste_reservoirs:
+        if r["nom"] == nom:
+            return (r["volume"] / r["capacite"]) < 0.20
+    return False  # nom non trouvé (ne devrait pas arriver selon l'énoncé)
+
+# Tests
+# Motuavai : 10000 / 90000 ≈ 11.1 % → pénurie
+assert est_en_penurie(reservoirs, "Motuavai") == True
+# Nuiavai  : 55000 / 100000 = 55 % → pas de pénurie
+assert est_en_penurie(reservoirs, "Nuiavai") == False
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire la fonction <code>volume_par_district(liste_reservoirs)</code> qui renvoie un dictionnaire associant chaque district au volume total d'eau disponible dans ce district.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> On parcourt tous les réservoirs ; pour chaque réservoir, on ajoute son volume au total du district correspondant dans le dictionnaire résultat. Si le district n'existe pas encore, on l'initialise à 0.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def volume_par_district(liste_reservoirs):
+    """Renvoie {district: volume_total} pour tous les districts."""
+    resultat = {}
+    for r in liste_reservoirs:
+        district = r["district"]
+        if district not in resultat:
+            resultat[district] = 0
+        resultat[district] += r["volume"]
+    return resultat
+
+# Exemple de résultat :
+# {'Tepua': 90000, 'Fare': 160000, 'Hiva Oro': 90000, 'Avera': 130000}
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                La fonction <code>volume_moyen</code> est incorrecte. Proposer des tests sous forme d'assertions pour mettre le ou les problèmes en évidence, puis proposer une version corrigée.
+            </div>
+            <div class="reponse text">
+                <strong>Identification du bug :</strong> La version originale divise par <code>len(reservoirs) - 1</code> au lieu de <code>len(reservoirs)</code>. Cela surestime la moyenne d'un facteur n/(n-1). Par exemple, avec 10 réservoirs, on divise par 9 au lieu de 10.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python"># Tests qui révèlent le bug
+r_test = [
+    {"nom": "A", "capacite": 100, "volume": 50, "district": "X"},
+    {"nom": "B", "capacite": 100, "volume": 50, "district": "Y"},
+]
+
+# Test 1 : la liste doit contenir au moins un réservoir
+assert len(r_test) >= 1
+
+# Test 2 : la moyenne ne peut pas dépasser la plus grande capacité
+moy = volume_moyen(r_test)
+assert moy <= max(r["capacite"] for r in r_test)
+
+# Test 3 : résultat exact → deux réservoirs à 50 → moyenne 50
+assert volume_moyen(r_test) == 50.0   # ÉCHOUE avec l'original (donne 100/1 = 100)
+
+# VERSION CORRIGÉE
+def volume_moyen(liste_reservoirs):
+    """Renvoie le volume moyen sur l'ensemble des réservoirs."""
+    somme_totale = sum(r["volume"] for r in liste_reservoirs)
+    return somme_totale / len(liste_reservoirs)   # CORRECTION : sans le -1
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                Proposer une adaptation du code pour identifier les districts vulnérables (volume moyen inférieur à 80 % du volume moyen global), puis proposer une stratégie de gestion.
+            </div>
+            <div class="reponse text">
+                <strong>Correction – fonction districts_vulnerables :</strong> On calcule d'abord la moyenne globale, puis pour chaque district on compare sa moyenne locale à <code>seuil × moyenne_globale</code>. Le seuil est un paramètre avec une valeur par défaut de 0,80 (80 %).
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def districts_vulnerables(liste_reservoirs, seuil=0.80):
+    """
+    Renvoie la liste des districts dont le volume moyen par réservoir
+    est inférieur à seuil * volume_moyen_global.
+    """
+    moy_globale = volume_moyen(liste_reservoirs)
+    rpd = {}
+    for r in liste_reservoirs:
+        rpd.setdefault(r["district"], []).append(r)
+
+    vulnerables = []
+    for district, res_liste in rpd.items():
+        moy_district = sum(r["volume"] for r in res_liste) / len(res_liste)
+        if moy_district < seuil * moy_globale:
+            vulnerables.append((district, round(moy_district, 1)))
+    return vulnerables
+
+print(districts_vulnerables(reservoirs))
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Stratégie de gestion proposée :</strong> (1) Identifier les réservoirs excédentaires (taux &gt; 80 %) dans les districts non vulnérables. (2) Calculer le volume transférable sans descendre sous un seuil de sécurité (ex : 50 % de la capacité). (3) Prioriser les transferts vers les districts les plus critiques (taux de remplissage le plus faible). (4) Planifier les transferts par camion citerne ou ouverture des canalisations inter-districts selon l'infrastructure disponible. (5) Réévaluer la situation après chaque transfert pour éviter de créer de nouveaux déséquilibres.
+            </div>
+        </div>
+
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>

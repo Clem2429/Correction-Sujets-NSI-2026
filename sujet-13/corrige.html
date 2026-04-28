@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrigé Sujet N°13</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°13</h1>
+        <h2>- Étude Climatique par Ballon Sonde -</h2>
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez télécharger les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download href="init/sujet.pdf">Sujet (PDF)</a>
+            <a download href="init/etude_climatique.py">Fichier Python Initial</a>
+            <a download href="init/releves_ballon_sonde.csv">Données CSV</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download href="corrige/etude_climatique_corrige.py">Fichier Python Corrigé</a>
+        </div>
+
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                En utilisant la fonction <code>recupere_donnees_fichier_csv</code>, écrire la ou les lignes de code qui récupèrent les données relevées par le ballon sonde dans 4 listes différentes : <code>altitudes</code>, <code>temperatures</code>, <code>longitudes</code> et <code>latitudes</code>.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> La fonction <code>recupere_donnees_fichier_csv</code> retourne un tuple de 4 listes. On utilise le déballage de tuple (unpacking) pour les récupérer directement dans 4 variables distinctes en une seule ligne.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python"># QUESTION 1 : récupération des données
+altitudes, temperatures, longitudes, latitudes = recupere_donnees_fichier_csv("releves_ballon_sonde.csv")
+
+# Vérification rapide
+print(f"Nombre de relevés : {len(altitudes)}")
+print(f"Première altitude : {altitudes[0]} m")
+print(f"Première température : {temperatures[0]} K")
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire en Python une fonction <code>conversion_K_en_C</code> qui prend en paramètre une liste de températures en kelvins et retourne cette même liste convertie en degrés Celsius, arrondie à 1 chiffre après la virgule. Écrire une ligne de test.
+            </div>
+            <div class="reponse text">
+                <strong>Rappel :</strong> La conversion est T(°C) = T(K) − 273,15. On utilise <code>round(valeur, 1)</code> pour arrondir à une décimale.
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On parcourt la liste avec une boucle <code>for</code> et on construit une nouvelle liste avec les valeurs converties.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def conversion_K_en_C(liste_temperatures):
+    """Convertit une liste de températures de Kelvin en Celsius, arrondie à 1 décimale."""
+    temperatures_C = []
+    for t in liste_temperatures:
+        temperatures_C.append(round(t - 273.15, 1))
+    return temperatures_C
+
+# Test
+print(conversion_K_en_C([288.15]))   # >> [15.0]
+print(conversion_K_en_C([273.15, 0, 373.15]))  # >> [0.0, -273.1, 100.0]
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction avancée :</strong> On peut écrire la même fonction de façon plus concise avec une compréhension de liste.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def conversion_K_en_C(liste_temperatures):
+    """Version concise avec compréhension de liste."""
+    return [round(t - 273.15, 1) for t in liste_temperatures]
+
+# Application sur les données réelles
+temperatures_C = conversion_K_en_C(temperatures)
+print(temperatures_C[:5])
+# >> [15.0, 13.7, 11.7, 7.9, 3.4]
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                Proposer une écriture de la fonction <code>altitude_la_plus_froide</code> qui prend en paramètres une liste d'altitudes et une liste de températures en °C, et renvoie un tuple <code>(temperature_min, [liste_altitudes_correspondantes])</code>.
+            </div>
+            <div class="reponse text">
+                <strong>Correction simple :</strong> On commence par trouver la température minimale avec <code>min()</code>, puis on parcourt la liste pour collecter toutes les altitudes associées à cette température.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def altitude_la_plus_froide(liste_altitudes, liste_temperatures):
+    """
+    Renvoie un tuple (temp_min, [altitudes correspondantes]).
+    Gère le cas où plusieurs altitudes partagent la même température minimale.
+    """
+    temp_min = min(liste_temperatures)
+    altitudes_froides = []
+    for i in range(len(liste_temperatures)):
+        if liste_temperatures[i] == temp_min:
+            altitudes_froides.append(liste_altitudes[i])
+    return (temp_min, altitudes_froides)
+
+# Tests de l'énoncé
+print(altitude_la_plus_froide([7000, 10125, 13896, 14211], [-35.2, -52.1, -57.4, -57.4]))
+# >> (-57.4, [13896, 14211])
+print(altitude_la_plus_froide([6000, 7250, 11542, 15214, 17300], [-33.7, -45, -53, -58.5, -60.1]))
+# >> (-60.1, [17300])
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction avancée :</strong> On peut également utiliser une compréhension de liste pour construire <code>altitudes_froides</code> de façon plus concise.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def altitude_la_plus_froide(liste_altitudes, liste_temperatures):
+    """Version avancée avec compréhension de liste."""
+    temp_min = min(liste_temperatures)
+    altitudes_froides = [
+        liste_altitudes[i]
+        for i in range(len(liste_temperatures))
+        if liste_temperatures[i] == temp_min
+    ]
+    return (temp_min, altitudes_froides)
+
+# Application sur les données réelles
+temperatures_C = conversion_K_en_C(temperatures)
+print(altitude_la_plus_froide(altitudes, temperatures_C))
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                Observer le corps de la fonction <code>genere_kml</code>, puis, à l'aide d'une assertion, insérer une ligne de code qui garantit que les deux listes <code>liste_longitudes</code> et <code>liste_latitudes</code> sont de même longueur.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> Une assertion (<code>assert</code>) permet de vérifier une condition en cours d'exécution. Si la condition est fausse, Python lève une <code>AssertionError</code> avec le message précisé. Elle doit être placée en début de fonction, avant la boucle de traitement.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def genere_kml(liste_longitudes, liste_latitudes):
+    # QUESTION 4 : assertion sur la cohérence des listes
+    assert len(liste_longitudes) == len(liste_latitudes), \
+        "Les deux listes doivent avoir la même longueur"
+
+    fichier_kml = open('ballon sonde.kml', 'w')
+    # ... suite du code ...
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 5</h3>
+            <div class="consigne">
+                Écrire une ligne de code qui appelle la fonction <code>genere_kml</code> avec les deux listes de longitudes et latitudes obtenues à la question 1, puis ouvrir le fichier KML généré.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> On appelle simplement <code>genere_kml</code> en passant les deux listes récupérées à la question 1. Le fichier <code>ballon sonde.kml</code> est créé dans le même répertoire que le script Python.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python"># QUESTION 5 : génération du fichier KML
+genere_kml(longitudes, latitudes)
+# Le fichier "ballon sonde.kml" est maintenant créé dans le répertoire courant.
+# Il peut être ouvert avec Google Earth, QGIS, ou tout logiciel compatible KML.
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 6</h3>
+            <div class="consigne">
+                Le fichier KML généré pose des problèmes de compatibilité avec certains logiciels : la balise <code>&lt;/kml&gt;</code> est absente en fin de fichier. Proposer une amélioration du code pour corriger ce problème.
+            </div>
+            <div class="reponse text">
+                <strong>Identification du problème :</strong> Dans la version originale de <code>genere_kml</code>, la variable <code>bas_fichier</code> contient uniquement <code>'&lt;/Document&gt;\n'</code>. La balise de fermeture racine <code>&lt;/kml&gt;</code> est oubliée. Le fichier KML n'est donc pas valide au sens XML et certains parseurs refusent de le charger.
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction :</strong> Il suffit d'ajouter <code>'&lt;/kml&gt;\n'</code> à la variable <code>bas_fichier</code> avant l'écriture dans le fichier.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def genere_kml(liste_longitudes, liste_latitudes):
+    assert len(liste_longitudes) == len(liste_latitudes), \
+        "Les deux listes doivent avoir la même longueur"
+    fichier_kml = open('ballon sonde.kml', 'w')
+    entete_fichier = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    entete_fichier += '<kml xmlns="http://www.opengis.net/kml/2.2">\n'
+    entete_fichier += '<Document>\n'
+    entete_fichier += '<name>Trajectoire ballon sonde</name>\n'
+    fichier_kml.write(entete_fichier)
+    for i in range(len(liste_longitudes)):
+        corps_fichier = '<Placemark>\n'
+        corps_fichier += f'<name>Point {i}</name>\n'
+        corps_fichier += '<Point>\n'
+        corps_fichier += f'<coordinates>{liste_longitudes[i]},{liste_latitudes[i]}</coordinates>\n'
+        corps_fichier += '</Point>\n'
+        corps_fichier += '</Placemark>\n'
+        fichier_kml.write(corps_fichier)
+    bas_fichier = '</Document>\n'
+    bas_fichier += '</kml>\n'    # CORRECTION : balise de fermeture racine ajoutée
+    fichier_kml.write(bas_fichier)
+    fichier_kml.close()
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Bonne pratique :</strong> Pour éviter ce type d'oubli, on peut aussi utiliser un gestionnaire de contexte (<code>with open(...) as f:</code>), qui garantit la fermeture du fichier même en cas d'erreur, et structurer le contenu KML de façon à rendre les balises ouvrantes/fermantes visiblement symétriques dans le code.
+            </div>
+        </div>
+
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>

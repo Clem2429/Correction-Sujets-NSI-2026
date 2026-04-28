@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrigé Sujet N°17</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°17</h1>
+        <h2>- Analyse du Budget d'un Club de Handball -</h2>
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez télécharger les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download href="init/sujet.pdf">Sujet (PDF)</a>
+            <a download href="init/analyse_budget.py">Fichier Python Initial</a>
+            <a download href="init/budget_complet.csv">Données CSV (budget complet)</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download href="corrige/analyse_budget_corrige.py">Fichier Python Corrigé</a>
+        </div>
+
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire la fonction <code>total_par_type(mouvements, type_mouvement)</code> qui renvoie la somme des montants pour un type donné (<code>'recette'</code> ou <code>'dépense'</code>). Créer ensuite une fonction <code>test_total()</code> avec au moins deux assertions.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> On parcourt la liste et on accumule les montants dont le champ <code>'type'</code> correspond au paramètre. Si aucun mouvement ne correspond, la variable <code>total</code> reste à 0, ce qui satisfait la condition de l'énoncé.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def total_par_type(mouvements, type_mouvement):
+    """Renvoie la somme des montants pour le type demandé."""
+    total = 0
+    for m in mouvements:
+        if m['type'] == type_mouvement:
+            total += m['montant']
+    return total
+
+def test_total():
+    # Recettes : 1200 + 300 + 800 = 2300
+    assert total_par_type(mouvements_test, 'recette') == 2300.0
+    # Dépenses : 450 + 200 + 1500 = 2150
+    assert total_par_type(mouvements_test, 'dépense') == 2150.0
+    # Type inexistant → 0
+    assert total_par_type(mouvements_test, 'inconnu') == 0
+    print("test_total : OK")
+
+test_total()
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Calculer manuellement le solde annuel pour <code>mouvements_test</code>, puis écrire <code>test_solde_annuel()</code> avec une assertion. Exécuter le test (qui doit échouer).
+            </div>
+            <div class="reponse text">
+                <strong>Calcul manuel :</strong>
+                Mois 1 : recettes = 1 200 €, dépenses = 0 € → solde = +1 200 €.
+                Mois 6 : recettes = 300 €, dépenses = 450 € → solde = −150 €.
+                Mois 12 : recettes = 800 €, dépenses = 200 + 1 500 = 1 700 € → solde = −900 €.
+                <strong>Total attendu = 1 200 − 150 − 900 = 150 €.</strong>
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def test_solde_annuel():
+    # Résultat théorique calculé manuellement : 150.0
+    assert solde_annuel(mouvements_test) == 150.0, \
+        f"Résultat obtenu : {solde_annuel(mouvements_test)}"
+    print("test_solde_annuel : OK")
+
+test_solde_annuel()
+# → AssertionError : le résultat renvoyé n'est pas 150.0 (bug à corriger)
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                Analyser le code de <code>solde_annuel</code>, identifier l'erreur logique, expliquer pourquoi certains mouvements sont ignorés, puis proposer une correction. Appliquer ensuite sur le fichier complet.
+            </div>
+            <div class="reponse text">
+                <strong>Identification du bug :</strong> La boucle de <code>solde_annuel</code> est <code>for m in range(1, 12)</code>. Or <code>range(1, 12)</code> génère les entiers de 1 à 11 inclus, sans jamais atteindre 12. Tous les mouvements du mois de décembre (mois 12) sont donc ignorés dans le calcul.
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction :</strong> Il suffit d'écrire <code>range(1, 13)</code> pour couvrir les 12 mois de janvier (1) à décembre (12).
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def solde_annuel(mouvements):
+    total = 0
+    for m in range(1, 13):    # CORRECTION : 13 au lieu de 12 (pour inclure décembre)
+        total += solde_mensuel(mouvements, m)
+    return total
+
+# Vérification sur les données de test
+assert solde_annuel(mouvements_test) == 150.0
+print("Correction validée.")
+
+# Application sur le fichier complet
+mouvements_complets = lire_mouvements_depuis_csv("budget_complet.csv")
+print("Solde annuel (fichier complet) :", solde_annuel(mouvements_complets), "€")
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Remarque :</strong> C'est une erreur classique avec <code>range</code> en Python : la borne supérieure est <em>exclue</em>. Pour itérer de 1 à n inclus, il faut toujours écrire <code>range(1, n+1)</code>.
+            </div>
+        </div>
+
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>

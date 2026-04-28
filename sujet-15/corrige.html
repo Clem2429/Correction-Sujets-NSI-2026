@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrigé Sujet N°15</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°15</h1>
+        <h2>- Gestion des Rappels de Vaccination (Cabinet Vétérinaire & SQLite) -</h2>
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez télécharger les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download href="init/sujet.pdf">Sujet (PDF)</a>
+            <a download href="init/veto.py">Fichier Python Initial</a>
+            <a download href="init/cabinet.sqlite">Base de données SQLite</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download href="corrige/veto_corrige.py">Fichier Python Corrigé</a>
+        </div>
+
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire la fonction <code>normalisation_tel</code> qui prend un numéro de téléphone en argument et renvoie uniquement les chiffres qu'il contient.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> On parcourt chaque caractère du numéro et on ne conserve que ceux qui sont des chiffres, à l'aide de la méthode <code>isdigit()</code>. Une compréhension de chaîne avec <code>join</code> est la solution la plus concise.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def normalisation_tel(tel):
+    """Renvoie uniquement les chiffres du numéro de téléphone."""
+    return ''.join(c for c in tel if c.isdigit())
+
+# Tests fournis
+normalisation_tel("(0)2 12 99 90 12")  # >> "0212999012"
+normalisation_tel("0.6.12.99.90.12")   # >> "0612999012"
+normalisation_tel("0-6-12-9-90-1")     # >> "06129901"
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire un jeu de tests permettant de vérifier le bon fonctionnement de la fonction <code>validation_tel</code> qui valide les numéros de portable français (06/07, 10 chiffres).
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> Un bon jeu de tests doit couvrir : un 06 valide, un 07 valide, un fixe (02…), un numéro trop court, un numéro trop long, et un numéro ne commençant pas par 0.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">assert validation_tel("0612999012")  == True    # 06 valide
+assert validation_tel("0712999012")  == True    # 07 valide
+assert validation_tel("0212999012")  == False   # fixe → invalide
+assert validation_tel("061299901")   == False   # 9 chiffres → trop court
+assert validation_tel("06129990123") == False   # 11 chiffres → trop long
+assert validation_tel("1612999012")  == False   # ne commence pas par 0
+print("Tous les tests validation_tel sont passés.")
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                En vous inspirant de <code>proprietaires_animaux_nes_apres</code>, écrire la fonction <code>consultation_vaccination_chat(date)</code> qui récupère les consultations de vaccination des chats après la date donnée (champs : id_animal, nom_animal, tel_proprietaire, date_consultation), triées par id puis date croissants.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> On effectue deux jointures : <code>animal</code> → <code>consultation</code> et <code>animal</code> → <code>proprietaire</code>. Les filtres portent sur l'espèce (<code>'chat'</code>), le motif (<code>'vaccination'</code>) et la date supérieure au paramètre.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def consultation_vaccination_chat(date):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    resultat = cursor.execute(
+        """
+        SELECT animal.id, animal.nom, proprietaire.telephone, consultation.date
+        FROM consultation
+            JOIN animal       ON consultation.id_animal      = animal.id
+            JOIN proprietaire ON animal.id_proprietaire      = proprietaire.id
+        WHERE animal.espece        = 'chat'
+          AND consultation.motif   = 'vaccination'
+          AND consultation.date    > ?
+        ORDER BY animal.id, consultation.date;
+        """,
+        (date,),
+    )
+    return list(resultat)
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                La fonction <code>derniere_vaccination</code> ne produit pas les résultats attendus. Expliquer le problème et proposer une correction.
+            </div>
+            <div class="reponse text">
+                <strong>Identification du bug :</strong> Dans la boucle, la condition de mise à jour est <code>elif date &lt; derniere[id_animal][3]</code>. Cette condition est vraie quand la date courante est <em>antérieure</em> à celle déjà enregistrée, ce qui fait qu'on remplace la consultation la plus récente par une plus ancienne. Le dictionnaire finit donc par contenir la <em>première</em> vaccination de chaque chat plutôt que la dernière.
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction :</strong> Il faut inverser la comparaison : mettre à jour uniquement si la date courante est <em>postérieure</em> à celle déjà enregistrée, c'est-à-dire <code>date &gt; derniere[id_animal][3]</code>. Les dates au format AAAAMMJJ se comparent correctement par ordre lexicographique.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">def derniere_vaccination(consultations):
+    derniere = {}
+    for consult in consultations:
+        id_animal = consult[0]
+        date = consult[3]
+        if id_animal not in derniere:
+            derniere[id_animal] = consult
+        elif date > derniere[id_animal][3]:   # CORRECTION : > au lieu de <
+            derniere[id_animal] = consult
+    return derniere
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Pourquoi la comparaison lexicographique fonctionne-t-elle ici ?</strong> Le format AAAAMMJJ (ex : <code>"20251125"</code>) range les dates par année, puis par mois, puis par jour, exactement comme l'ordre alphabétique. Comparer deux dates dans ce format avec <code>&lt;</code> ou <code>&gt;</code> est donc équivalent à une comparaison chronologique.
+            </div>
+        </div>
+
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>

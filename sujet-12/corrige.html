@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrigé Sujet N°12</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <link href="../css/site.css" rel="stylesheet"/>
+    <link href="../css/corrige.css" rel="stylesheet"/>
+</head>
+<body>
+    <main>
+        <a href="../index.html" class="lien-accueil out-pdf">Accueil</a>
+        <button type="button" class="lien-top out-pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <br><br>
+        <h1>Corrigé Sujet N°12</h1>
+        <h2>- Gestion d'un Refuge pour Renards -</h2>
+        <div class="bloc-info-ressources out-pdf">
+            Vous pouvez télécharger les éléments suivants en cliquant sur les boutons associés :
+        </div>
+        <div class="ressources out-pdf">
+            <a download href="init/sujet.pdf">Sujet (PDF)</a>
+            <a download href="init/gestion_refuge.py">Fichier Python Initial</a>
+            <a download href="init/donnees_renards.csv">Données CSV</a>
+        </div>
+        <div class="ressources-corrigees out-pdf">
+            <a download href="corrige/gestion_refuge_corrige.py">Fichier Python Corrigé</a>
+        </div>
+
+        <div class="question">
+            <h3>Question 1</h3>
+            <div class="consigne">
+                Écrire le code du constructeur <code>__init__</code> de la classe <code>Renard</code>, qui initialise les quatre attributs : <code>identifiant</code>, <code>nom</code>, <code>poids</code> et <code>date_arrivee</code>.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> Le constructeur reçoit les quatre paramètres et les affecte aux attributs d'instance avec le préfixe <code>self.</code>. C'est le mécanisme standard de Python pour créer des attributs d'objet.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">class Renard:
+    def __init__(self, identifiant, nom, poids, date_arrivee):
+        self.identifiant = identifiant
+        self.nom = nom
+        self.poids = poids
+        self.date_arrivee = date_arrivee
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 2</h3>
+            <div class="consigne">
+                Écrire le code de la méthode <code>__str__</code> de la classe <code>Renard</code> qui renvoie une chaîne au format précis : <code>"Renard ID [id] - [Nom] (Arrivé le [date_arrivee])"</code>. Tester ensuite en instanciant un renard <code>renard1</code> (ID 200, Oscar, 5.1 kg, arrivé le 1er janvier 2026).
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> La méthode <code>__str__</code> est la méthode spéciale appelée par <code>print()</code>. On utilise une f-string pour insérer les attributs de l'objet dans la chaîne au format demandé.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">    def __str__(self):
+        return f"Renard ID {self.identifiant} - {self.nom} (Arrivé le {self.date_arrivee})"
+
+# Test
+renard1 = Renard(200, "Oscar", 5.1, "2026-01-01")
+print(renard1)
+# >> Renard ID 200 - Oscar (Arrivé le 2026-01-01)
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 3</h3>
+            <div class="consigne">
+                L'exécution de la méthode <code>importer_donnees</code> provoque une erreur logique lors de l'utilisation ultérieure des données, notamment lors de la manipulation du poids et de l'identifiant des renards. Identifier la source de l'erreur, proposer une correction, puis tester en instanciant le refuge "SOS Goupil".
+            </div>
+            <div class="reponse text">
+                <strong>Identification de l'erreur :</strong> Dans le code original, les valeurs lues depuis le CSV sont toutes des chaînes de caractères (<code>str</code>). Les champs <code>id</code> et <code>poids</code> sont transmis tels quels au constructeur de <code>Renard</code> sans conversion de type. Ainsi, <code>renard.poids</code> contient la chaîne <code>"6.5"</code> au lieu du flottant <code>6.5</code>. La comparaison <code>renard.poids &lt; 6.0</code> dans <code>lister_peu_corpulents</code> lève alors une <code>TypeError</code> (impossible de comparer un str à un float en Python 3).
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Correction :</strong> Il faut convertir explicitement <code>ligne['id']</code> en <code>int</code> et <code>ligne['poids']</code> en <code>float</code> lors de la création de chaque objet <code>Renard</code>.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">    def importer_donnees(self, nom_fichier):
+        print(f"Tentative d'importation depuis {nom_fichier}...")
+        with open(nom_fichier, 'r', encoding='utf-8') as f:
+            lignes = csv.DictReader(f, delimiter=';')
+            for ligne in lignes:
+                renard = Renard(
+                    int(ligne['id']),        # CORRECTION : conversion en int
+                    ligne['nom'],
+                    float(ligne['poids']),   # CORRECTION : conversion en float
+                    ligne['date_arrivee']
+                )
+                self.recueillir(renard)
+
+# Test
+refuge = Refuge("SOS Goupil", "1 rue de la Forêt, 75000 Paris")
+refuge.importer_donnees("donnees_renards.csv")
+print(f"Renards importés : {len(refuge.liste_renards)}")
+# >> Renards importés : 30
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>Question 4</h3>
+            <div class="consigne">
+                Exécuter les deux méthodes d'analyse de la corpulence sur l'instance du refuge. Justifier le pourcentage obtenu en isolant et en affichant le nombre de renards peu corpulents par rapport au nombre total de renards hébergés.
+            </div>
+            <div class="reponse text">
+                <strong>Correction :</strong> Un renard est dit peu corpulent si son poids est <em>strictement inférieur</em> à 6,0 kg. On compte les renards concernés puis on calcule le ratio. Avec les 30 renards du fichier CSV, 13 ont un poids &lt; 6,0 kg, ce qui donne un pourcentage d'environ 43,3 %.
+            </div>
+            <br>
+            <div class="reponse code">
+                <pre><code class="language-python">peu_corpulents = refuge.lister_peu_corpulents()
+total = len(refuge.liste_renards)
+nb_peu = len(peu_corpulents)
+
+print(f"Renards peu corpulents : {nb_peu} / {total}")
+print(f"Pourcentage : {refuge.pourcentage_peu_corpulents():.1f}%")
+
+# Affichage détaillé
+for r in peu_corpulents:
+    print(f"  {r}")
+
+# >> Renards peu corpulents : 13 / 30
+# >> Pourcentage : 43.3%
+# >> Renard ID 102 - Roxy (Arrivé le 2023-02-10)
+# >> Renard ID 104 - Kira (Arrivé le 2024-11-20)
+# >> ... (etc.)
+                </code></pre>
+            </div>
+            <br>
+            <div class="reponse text">
+                <strong>Justification :</strong> 13 renards sur 30 ont un poids strictement inférieur à 6,0 kg. Le calcul est : 13 ÷ 30 × 100 ≈ 43,3 %. Cette proportion représente près de la moitié des pensionnaires du refuge, ce qui peut alerter les vétérinaires sur un suivi nutritionnel à renforcer.
+            </div>
+        </div>
+
+        <div class="legal">© 2026 - Clément Legoubé</div>
+        <br>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    <script src="../site.js"></script>
+</body>
+</html>
